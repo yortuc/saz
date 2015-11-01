@@ -1,7 +1,7 @@
 // GameObject
 
 export default class GameObject {
-	constructor(comp) {
+	constructor(comp = []) {
 		this.components = [];
 		comp.map(
 			c => this.addComponent(c)
@@ -11,6 +11,7 @@ export default class GameObject {
 	addComponent (component) {
 		component.gameObject = this;
 		this.components.push(component);
+		return component;
 	}
 
 	getComponent (typeInfo){
@@ -23,7 +24,6 @@ export default class GameObject {
 	}
 
 	update (dt, ctx) { 
-		//console.log(dt);
-		this.components.map(c=> c.update(dt, ctx));
+		this.components.map(c => c.update(dt, ctx));
 	}
 }

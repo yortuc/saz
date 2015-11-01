@@ -12,4 +12,10 @@ export default class Transform {
 	update(dt){
 		//
 	}
+
+	// @param vector : V2
+	Translate(vector) {
+		this.x += vector.x;
+		this.y += vector.y;
+	}
 }
