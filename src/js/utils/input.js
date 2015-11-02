@@ -28,5 +28,11 @@ export default {
 
 			return {x:0 , y:0 }
 		}
-	}  
+	},
+
+	getKeyDown: function(key){
+		if(key === "space") {
+			return this.keys[32] > 0;
+		}
+	}
 }

@@ -1,9 +1,10 @@
 import requestAnimationFrame from '../requestAnimationFrame';  
+import Graphics from '../utils/graphics';
 
 export default class Scene {
 
 	constructor(children) {
-		this.ctx = document.getElementById("canvas").getContext("2d");
+		this.ctx = Graphics.ctx;
 		this.children = [];
 		
 		children.map(c=> {
@@ -24,7 +25,7 @@ export default class Scene {
 		this.ctx.clearRect(0, 0, 600, 480);
 
 		this.children.map(g => {
-			g.update(dt, this.ctx);
+			g.update(dt);
 		});
 		this.lastRender = time;
 

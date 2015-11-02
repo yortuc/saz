@@ -1,3 +1,6 @@
+import Graphics from '../utils/graphics';
+import Geometry from '../utils/geometry';
+
 export default class Controller2D {
 	
 	constructor(){
@@ -5,8 +8,14 @@ export default class Controller2D {
 		this.horizontalRayCount = 1;		// one ray from center
 		this.horizontalRaySpacing = null;
 		this.verticalRaySpacing = null;
+		this.verticalRayCount = 4;
+		this.verticalRaySpacing = null;
 
 		this.transform =  null;
+		this.collisions = {
+			above: false,
+			below: false
+		}
 	}
 
 	update (){
@@ -28,43 +37,27 @@ export default class Controller2D {
 	VerticalCollisions(velocity) {
 		let directionY = Math.sign (velocity.y);
 		let rayLength = Math.abs (velocity.y) + this.skinWidth;
-		let rayOrigin = {
-			x: this.transform.x + (this.transform.width/2), 
-			y: this.transform.y + this.transform.height
-		};
- 
-		//rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
 
-		let hit = Raycast(this.gameObject, this.gameObject.parent.children, 
-						  rayOrigin, 
-						  directionY, 
-						  rayLength);
+		for (let i = 0; i < this.verticalRayCount; i ++) {
 
-		// Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength,Color.red);
+			let rayOrigin = {
+				x: this.transform.x + (20/3 * i + this.transform.velocity.x), 
+				y: this.transform.y + this.transform.height
+			};
+	 
+			let hit = Geometry.Raycast(this.gameObject.getSiblings(), 
+							  rayOrigin, 
+							  directionY, 
+							  rayLength);
 
-		if (hit) {
-			velocity.y = (hit.distance - this.skinWidth) * directionY;
-			rayLength = hit.distance;
-		}
-	}
-}
+			Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + rayLength }, "green");
 
+			if (hit) {
+				velocity.y = (hit.distance - this.skinWidth);
+				rayLength = hit.distance;
 
-function Raycast(go, objects, origin, direction, rayLength){
-	for(var i in  objects){
-
-		if(objects[i] === go) continue;
-
-		let rect2 = objects[i].getComponent("Transform");
-		let rc =  rect2.y - origin.y;
-
-		if( rc < rayLength ){
-			return {
-				distance: rc
+				this.collisions.below = true;
 			}
-		}
-		else{
-			return null;
 		}
 	}
 }

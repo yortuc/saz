@@ -29,7 +29,7 @@ var config = {
 			'./src/css/*.css'
 		],
 		cssPath: './src/css/*.css',
-		mainJs: './src/main.js',
+		mainJs: './src/js/main.js',
 		dist: './dist'
 	}
 }

@@ -23,7 +23,18 @@ export default class GameObject {
 		}
 	}
 
-	update (dt, ctx) { 
-		this.components.map(c => c.update(dt, ctx));
+	getSiblings (){
+		let parent = this.parent;
+		if(!parent) return null;
+
+		let siblings = parent.children.filter(s=> {
+			return s !== this;
+		}.bind(this));
+
+		return siblings;
+	}
+
+	update (dt) { 
+		this.components.map(c => c.update(dt));
 	}
 }
