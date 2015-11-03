@@ -41,7 +41,7 @@ export default class Controller2D {
 		for (let i = 0; i < this.verticalRayCount; i ++) {
 
 			let rayOrigin = {
-				x: this.transform.x + (20/3 * i + this.transform.velocity.x), 
+				x: this.transform.x + ((20+this.skinWidth*2)/3 * i + this.transform.velocity.x), 
 				y: this.transform.y + this.transform.height
 			};
 	 

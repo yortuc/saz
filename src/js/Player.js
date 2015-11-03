@@ -18,7 +18,7 @@ export default class Player extends GameObject{
 		this.addComponent(new RectangleRenderer("red"));
 
 		this.velocity = {x:0, y:0};
-		this.moveSpeed = 2;
+		this.moveSpeed = 6;
 
 		this.jumpHeight = 2;
 		this.timeToJumpApex = 0.4;
