@@ -1,16 +1,19 @@
 // transform
 
 export default class Transform {
-	constructor(x, y, width, height){
-		this.x = x;
-		this.y = y;
-		this.velocity = {x: 0, y: 0};
-		this.width = width;
-		this.height = height;
+	constructor(data){
+		this.x = data.x;
+		this.y = data.y;
+		this.velocity = data.velocity || {x: 0, y: 0};
+		this.width = data.width;
+		this.height = data.height;
+		this.rotation = data.rotation || 0; // degrees
+	}
+
+	init (){
 	}
 
 	update(dt){
-		//
 	}
 
 	// @param vector : V2

@@ -6,11 +6,17 @@ export default class Scene {
 	constructor(children) {
 		this.ctx = Graphics.ctx;
 		this.children = [];
-		
+
 		children.map(c=> {
 			c.parent = this;
 			this.children.push(c);
 		});
+	}
+
+	getComponent(typeInfo){
+		return {
+			x: 0, y: 0
+		}
 	}
 
 	start() {

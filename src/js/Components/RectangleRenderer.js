@@ -1,15 +1,18 @@
 // RectangleRenderer 
-
 import Graphics from '../utils/graphics';
 
-export default class RectangleRenderer{
+export default class RectangleRenderer {
 	constructor(color="black"){
 		this.color = color;
 	}
+
+	init (){
+		this.transform = this.gameObject.getComponent("Transform");
+	}
+
 	update(dt) {
 		let ctx = Graphics.ctx;
-		var transform = this.gameObject.getComponent("Transform");
 		ctx.fillStyle = this.color;
-		ctx.fillRect(transform.x, transform.y, transform.width, transform.height);
+		ctx.fillRect(this.transform.x, this.transform.y, this.transform.width, this.transform.height);
 	}
 }

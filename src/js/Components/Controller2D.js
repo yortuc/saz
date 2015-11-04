@@ -1,9 +1,24 @@
 import Graphics from '../utils/graphics';
 import Geometry from '../utils/geometry';
+import Input from '../utils/input';
 
 export default class Controller2D {
 	
-	constructor(){
+	constructor(data){
+		data = data || {};
+
+		// props
+		this.moveSpeed = data.moveSpeed || 6;
+		this.jumpHeight = data.jumpHeight || 2;
+		this.timeToJumpApex = data.timeToJumpApex || 0.4;
+		this.accelerationTimeAirborne = data.accelerationTimeAirborne || 0.2;
+		this.accelerationTimeGrounded = data.accelerationTimeGrounded || 0.1;
+		
+		this.gravity = (2 * this.jumpHeight) / Math.pow (this.timeToJumpApex, 2);
+		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
+		console.log("Gravity: " + this.gravity + "  Jump Velocity: " + this.jumpVelocity);
+
+		// private
 		this.skinWidth = 0.015;
 		this.horizontalRayCount = 1;		// one ray from center
 		this.horizontalRaySpacing = null;
@@ -11,15 +26,27 @@ export default class Controller2D {
 		this.verticalRayCount = 4;
 		this.verticalRaySpacing = null;
 
-		this.transform =  null;
 		this.collisions = {
 			above: false,
 			below: false
 		}
 	}
 
-	update (){
-		this.transform = this.transform || this.gameObject.getComponent("Transform");
+	init() {
+		this.transform =  this.gameObject.getComponent("Transform");
+		console.log("inited Controller2D", this.transform);
+	}
+
+	update (dt){
+
+		if (Input.getKeyDown("space") && this.collisions.below) {
+			console.log("getKeyDown");
+			this.transform.velocity.y = this.jumpVelocity;
+		}
+
+		this.transform.velocity.x = Input.getAxis("horizontal").x * this.moveSpeed;
+		this.transform.velocity.y += this.gravity * dt/1000;
+		this.Move(this.transform.velocity);
 	}
 
 	// @param velocity : V2
@@ -29,7 +56,6 @@ export default class Controller2D {
 			this.VerticalCollisions (/*ref*/ velocity);
 		}
 
-		this.transform = this.transform || this.gameObject.getComponent("Transform");
 		this.transform.Translate (velocity);
 	}
 
