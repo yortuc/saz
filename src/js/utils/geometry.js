@@ -8,6 +8,9 @@ export default {
 		for(var i in  objects){
 
 			let rect2 = objects[i].getComponent("Transform");
+
+			if(rect2.y <= origin.y) continue;
+
 			let inXrange = origin.x > rect2.x && origin.x < rect2.x + rect2.width;
 			let rc =  rect2.y - origin.y;
 

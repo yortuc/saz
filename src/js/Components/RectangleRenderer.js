@@ -1,13 +1,13 @@
 // RectangleRenderer 
 import Graphics from '../utils/graphics';
+import Behavior from './Behavior';
 
-export default class RectangleRenderer {
-	constructor(color="black"){
-		this.color = color;
-	}
+export default class RectangleRenderer extends Behavior {
+	constructor(gameObject, color="black"){
+		super(gameObject);
 
-	init (){
 		this.transform = this.gameObject.getComponent("Transform");
+		this.color = color;
 	}
 
 	update(dt) {

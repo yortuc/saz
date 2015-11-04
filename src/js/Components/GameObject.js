@@ -1,3 +1,5 @@
+import Behavior from './Behavior';
+
 // GameObject
 
 export default class GameObject {
@@ -11,16 +13,8 @@ export default class GameObject {
 	addComponent (component) {
 		component.gameObject = this;
 		console.log(component.constructor.name);
-		component.init();
 		this.components.push(component);
 		return component;
-	}
-
-	add (component) {
-		component.gameObject = this;
-		component.init();
-		this.components.push(component);
-		return this;
 	}
 
 	getComponent (typeInfo){
