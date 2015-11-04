@@ -28,7 +28,7 @@ export default class Scene {
 		const time = Date.now();
 		const dt =  time - this.lastRender;
 
-		this.ctx.clearRect(0, 0, 600, 480);
+		this.ctx.clearRect(0, 0, 800, 480);
 
 		this.children.map(g => {
 			g.update(dt);

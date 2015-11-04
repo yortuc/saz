@@ -12,7 +12,7 @@ export default class PositionTextRenderer extends Behavior {
 
 	update(dt) {
 		let ctx = Graphics.ctx;
-		let text = "x: " + this.goVelcity.x.toString() + " y: " + this.goVelcity.y.toString();
+		let text = "x: " + this.goVelcity.x.toString() + " y: " + this.goVelcity.y.toFixed(8).toString();
 		ctx.font = "20px Arial";
 		ctx.fillText(text, this.x, this.y);
 	}

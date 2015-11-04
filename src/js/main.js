@@ -9,15 +9,15 @@ import PositionTextRenderer from './Components/PositionTextRenderer';
 
 import Scene from './Components/Scene';  
  
-Graphics.init(); 
+Graphics.init();  
 Input.init();  
 
 var player = new GameObject();
 	new Transform(player, { x: 170, y: 50, width: 100, height: 100 });
 	new Controller2D(player, { 
 		moveSpeed:6,
-		jumpHeight: 2, 
-		timeToJumpApex: 0.4,
+		jumpHeight: 5, 
+		timeToJumpApex: 0.5,
 		accelerationTimeAirborne: 0.2,
 		accelerationTimeGrounded: 0.1
 	});
@@ -25,17 +25,25 @@ var player = new GameObject();
 	new PositionTextRenderer(player, {x: 20, y:20 });
 
 var yer = new GameObject();
-	new Transform(yer, {x: 10, y: 400, width: 100, height: 20 });
+	new Transform(yer, {x: 0, y: 460, width: 800, height: 20 });
 	new RectangleRenderer(yer);
+	new PositionTextRenderer(yer, {x: 20, y:50 });
  
-var yer2 = new GameObject();
-	new Transform(yer2, {x: 200, y: 300, width: 100, height: 20 });
-	new RectangleRenderer(yer2);
-
 var yer3 = new GameObject();
-	new Transform(yer3, {x: 280, y: 200, width: 100, height: 20 });
+	new Transform(yer3, {x: 300, y: 100, width: 160, height: 20 });
 	new RectangleRenderer(yer3);
 
+var yer2 = new GameObject();
+	new Transform(yer2, {x: 100, y: 300, width: 100, height: 20 });
+	new RectangleRenderer(yer2);
 
-var scene = new Scene([ player, yer, yer2, yer3 ]);
+var kutu = new GameObject();
+	new Transform(kutu, {x: 360, y: 400, width: 60, height: 60 });
+	new RectangleRenderer(kutu);
+
+var kutu2 = new GameObject();
+	new Transform(kutu2, {x: 700, y: 360, width: 100, height: 100 });
+	new RectangleRenderer(kutu2);
+
+var scene = new Scene([ player, yer, yer2, yer3, kutu, kutu2 ]);
 scene.start();
