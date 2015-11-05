@@ -18,15 +18,16 @@ export default class Controller2D extends Behavior {
 		
 		// private
 		this.skinWidth = 0.015;
-		this.horizontalRayCount = 4;		// one ray from center
+		this.horizontalRayCount = 8;		// one ray from center
 		this.horizontalRaySpacing = null;
 		this.verticalRaySpacing = null;
-		this.verticalRayCount = 4;
+		this.verticalRayCount = 8;
 		this.verticalRaySpacing = null;
 		this.gravity = (2 * this.jumpHeight) / Math.pow (this.timeToJumpApex, 2);
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
 		this.raycastOrigins = null;
 		this.transform = this.gameObject.getComponent("Transform");
+		this.debugDraw = false;
 
 		this.collisions = {
 			reset: function(){ 
@@ -116,7 +117,7 @@ export default class Controller2D extends Behavior {
 							  directionY, 
 							  rayLength);
 
-			Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*10 }, "green");
+			this.debugDraw && Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*10 }, "green");
 
 			if (hit) {
 				velocity.y = (hit.distance - this.skinWidth) * directionY;
@@ -145,7 +146,7 @@ export default class Controller2D extends Behavior {
 							  directionX, 
 							  rayLength);
 
-			Graphics.line(rayOrigin, {x: rayOrigin.x + directionX * rayLength * 10, y: rayOrigin.y }, "green");
+			this.debugDraw && Graphics.line(rayOrigin, {x: rayOrigin.x + directionX * rayLength * 10, y: rayOrigin.y }, "green");
 
 			if (hit) {
 				velocity.x = (hit.distance - this.skinWidth) * directionX;
