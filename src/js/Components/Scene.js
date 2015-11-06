@@ -1,9 +1,12 @@
+import Behavior from './Behavior';
 import requestAnimationFrame from '../requestAnimationFrame';  
 import Graphics from '../utils/graphics';
+import Geometry from '../utils/Geometry';
 
-export default class Scene {
+export default class Scene extends Behavior {
 
-	constructor(children) {
+	constructor(gameObject, children=[]) {
+		super(gameObject);
 		this.ctx = Graphics.ctx;
 		this.children = [];
 
@@ -11,12 +14,8 @@ export default class Scene {
 			c.parent = this;
 			this.children.push(c);
 		});
-	}
 
-	getComponent(typeInfo){
-		return {
-			x: 0, y: 0
-		}
+		this.start();
 	}
 
 	start() {
@@ -25,6 +24,7 @@ export default class Scene {
 	}
 
 	update() {
+
 		const time = Date.now();
 		const dt =  time - this.lastRender;
 
@@ -32,6 +32,11 @@ export default class Scene {
 
 		this.children.map(g => {
 			g.update(dt);
+		});
+		this.gameObject.components.map(s=> {
+			if(s.constructor.name !== "Scene"){
+				s.update(dt);
+			}
 		});
 		this.lastRender = time;
 

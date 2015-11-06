@@ -1,5 +1,10 @@
+import Geometry from './geometry';
+
 export default {
-	init: function(){
+	init: function(width, height){
+		this.width = width;
+		this.height = height;
+
 		this.ctx = document.getElementById("canvas").getContext("2d");
 	},
 
