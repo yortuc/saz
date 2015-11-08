@@ -10,6 +10,10 @@ export default class Scene extends GameObject {
 		this.ctx = Graphics.ctx;
 	}
 
+	setChildren(children=[]){
+		children.map(c=> this.addChild(c));
+	}
+
 	start() {
 		this.transform = this.getComponent("Transform");
 		this.lastRender = Date.now();

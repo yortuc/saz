@@ -1,45 +1,29 @@
 import Graphics from './Graphics';
 
-class QuadTreeNode {
-	constructor(topLeftX, topLeftY, width, height) {
-		this.topLeftX = topLeftX;	// node top-left x
-		this.topLeftY = topLeftY;	// node top-left y
-		this.width = width;			// node width
-		this.height = height;		// node height
-		this.subNodes = [];			// leaf nodes of branch node
-		this.objects = [];			// containing elements of leaf node
-	}
-}
-
-QuadTreeNode.prototype = {
-	subDivide: function (){
-		
-		if(this.subNodes.length === 0){
-			// leaf node
-			//	q1,q2 
-			//	q3,q4
-			//
-			let w = this.width / 2;
-			let h = this.height / 2;
-
-			const q1 = new QuadTreeNode( this.topLeftX, 	this.topLeftY, 		w, h );
-			const q2 = new QuadTreeNode( this.topLeftX + w, this.topLeftY, 		w, h );
-			const q3 = new QuadTreeNode( this.topLeftX, 	this.topLeftY + h, 	w, h );
-			const q4 = new QuadTreeNode( this.topLeftX + w, this.topLeftY + h, 	w, h );
-
-			this.subNodes  = [q1, q2, q3, q4];
-		}
-		else {
-			// branch node
-			this.subNodes.map(s => s.subDivide());
-		}
-	}
-}
-
 export default {
 
-	// topLeft: x, y
-	QuadTreeNode: QuadTreeNode ,
+	// check if given 2 rectangles overlap
+	RectanglesOverlap: function(rect1, rect2)
+	{
+		const left1 	= rect1.x;
+		const right1 	= rect1.x + rect1.width;
+		const top1 		= rect1.y;
+		const bottom1 	= rect1.y + rect1.height;
+
+		const left2 	= rect2.x;
+		const right2 	= rect2.x + rect2.width;
+		const top2 		= rect2.y;
+		const bottom2 	= rect2.y + rect2.height;
+
+         if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2) {
+            // they do not overlap
+            return false;
+         }
+         else {
+            // they overlap
+            return true;
+         }
+	},
 
 	// filter objects within the same quadTree node (optional)
 	RaycastX: function (objects, origin, direction, rayLength){

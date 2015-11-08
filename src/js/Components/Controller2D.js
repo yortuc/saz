@@ -17,7 +17,8 @@ export default class Controller2D extends Behavior {
 		this.timeToJumpApex = data.timeToJumpApex || 0.4;
 		this.accelerationTimeAirborne = data.accelerationTimeAirborne || 0.2;
 		this.accelerationTimeGrounded = data.accelerationTimeGrounded || 0.1;
-		
+		this.quadTree = data.sceneQuadTree.quadTree;
+
 		// private
 		this.skinWidth = 0.015;
 		this.horizontalRayCount = 8;		// one ray from center
@@ -29,7 +30,6 @@ export default class Controller2D extends Behavior {
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
 		this.raycastOrigins = null;
 		this.transform = this.gameObject.getComponent("Transform");
-		this.quadTree = this.gameObject.getComponent("QuadTree");
 		this.debugDraw = false;
 
 		this.collisions = {
