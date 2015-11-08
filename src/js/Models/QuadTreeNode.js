@@ -40,6 +40,19 @@ class QuadTreeNode {
 		return overlap;
 	}
 
+	getCollidableObjects (objRef){
+		// get collidible objects with in the same quad-tree-node with 
+		// ref object
+
+		if(this.subNodes.length === 0){
+			// leaf node, return all object in this node exluding the ref obj itself
+			return this.subNodes.filter(s=> s !== objRef);
+		}
+		else{
+			// branch node, check sub-nodes
+		}
+	}
+
 	subDivide(){
 		
 		if(this.subNodes.length === 0){

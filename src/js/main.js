@@ -37,7 +37,7 @@ var oyun = new Scene();
 	new SceneQuadTreeNodeRenderer(oyun);
 
 	var player = new GameObject();
-		new Transform(player, { x: 150, y: 50, width: 30, height: 30 });
+		new Transform(player, { x: 550, y: 50, width: 30, height: 30 });
 		new Controller2D(player, { 
 			moveSpeed:6,					// player x movement velocity
 			jumpHeight: 5, 	 				// 
@@ -49,6 +49,23 @@ var oyun = new Scene();
 		new RectangleRenderer(player, "red"); 
 		new PositionTextRenderer(player, {x: 20, y:20, label:"player velocity" });
 	 
+		var kafa = new GameObject();
+			player.addChild(kafa);
+			new Transform(kafa, {x: 10, y: -10, width: 10, height: 10 });
+			new RectangleRenderer(kafa, "red");
+		var kol1 = new GameObject();
+			player.addChild(kol1);
+			new Transform(kol1, {x: -5, y: 0, width: 5, height: 15 });
+			new RectangleRenderer(kol1, "black");
+		var kol2 = new GameObject();
+			player.addChild(kol2);
+			new Transform(kol2, {x: 30, y: 0, width: 5, height: 15 });
+			new RectangleRenderer(kol2, "black");
+		var ara = new GameObject();
+			player.addChild(ara);
+			new Transform(ara, {x: 10, y: 20, width: 10, height: 10 });
+			new RectangleRenderer(ara, "white");
+
 	 var yer3 = new GameObject();
 		new Transform(yer3, {x: 300, y: 100, width: 160, height: 20, rotation: 20 });
 		new RectangleRenderer(yer3);

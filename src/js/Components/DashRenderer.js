@@ -21,7 +21,9 @@ export default class RectangleRenderer extends Behavior {
 		ctx.translate(this.transform.x - this.transform.width/2, this.transform.y - this.transform.height/2);
 		ctx.rotate(this.transform.rotation * Math.PI/180);
 		ctx.strokeStyle = this.color;
-		ctx.setLineDash([4, 2]);
+		ctx.setLineDash([4,2]);
+		ctx.lineWidth = 1;
+		ctx.lineCap = 'round';
 		ctx.lineDashOffset = -this.offset;
 		
 		ctx.strokeRect(this.transform.width/2-this.expand,this.transform.height/2-this.expand, 
