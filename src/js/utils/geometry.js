@@ -1,43 +1,49 @@
 import Graphics from './Graphics';
 
+class QuadTreeNode {
+	constructor(topLeftX, topLeftY, width, height) {
+		this.topLeftX = topLeftX;	// node top-left x
+		this.topLeftY = topLeftY;	// node top-left y
+		this.width = width;			// node width
+		this.height = height;		// node height
+		this.subNodes = [];			// leaf nodes of branch node
+		this.objects = [];			// containing elements of leaf node
+	}
+}
+
+QuadTreeNode.prototype = {
+	subDivide: function (){
+		
+		if(this.subNodes.length === 0){
+			// leaf node
+			//	q1,q2 
+			//	q3,q4
+			//
+			let w = this.width / 2;
+			let h = this.height / 2;
+
+			const q1 = new QuadTreeNode( this.topLeftX, 	this.topLeftY, 		w, h );
+			const q2 = new QuadTreeNode( this.topLeftX + w, this.topLeftY, 		w, h );
+			const q3 = new QuadTreeNode( this.topLeftX, 	this.topLeftY + h, 	w, h );
+			const q4 = new QuadTreeNode( this.topLeftX + w, this.topLeftY + h, 	w, h );
+
+			this.subNodes  = [q1, q2, q3, q4];
+		}
+		else {
+			// branch node
+			this.subNodes.map(s => s.subDivide());
+		}
+	}
+}
+
 export default {
 
 	// topLeft: x, y
-	QuadTreeNode: class QuadTreeNode{
-		constructor(topLeftX, topLeftY, width, height) {
-			this.topLeftX = topLeftX;
-			this.topLeftY = topLeftY;
-			this.width = width;
-			this.height = height;
-			this.subNodes = [];
-		}
+	QuadTreeNode: QuadTreeNode ,
 
-		subDivide (){
-			
-			if(this.subNodes.length === 0){
-				// leaf node
-				//	q1,q2 
-				//	q3,q4
-				//
-				let w = this.width / 2;
-				let h = this.height / 2;
-
-				const q1 = new QuadTreeNode( this.topLeftX, 	this.topLeftY, 		w, h );
-				const q2 = new QuadTreeNode( this.topLeftX + w, this.topLeftY, 		w, h );
-				const q3 = new QuadTreeNode( this.topLeftX, 	this.topLeftY + h, 	w, h );
-				const q4 = new QuadTreeNode( this.topLeftX + w, this.topLeftY + h, 	w, h );
-
-				this.subNodes  = [q1, q2, q3, q4];
-			}
-			else {
-				// branch node
-				this.subNodes.map(s => s.subDivide());
-			}
-		}
-	},
-
+	// filter objects within the same quadTree node (optional)
 	RaycastX: function (objects, origin, direction, rayLength){
-
+		
 		let closest = null;
 
 		for(var i in  objects){

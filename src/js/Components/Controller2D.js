@@ -1,6 +1,8 @@
 import Graphics from '../utils/graphics';
 import Geometry from '../utils/geometry';
 import Input from '../utils/input';
+import MessageHub from '../utils/messageHub';
+
 import Behavior from './Behavior';
 
 
@@ -27,6 +29,7 @@ export default class Controller2D extends Behavior {
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
 		this.raycastOrigins = null;
 		this.transform = this.gameObject.getComponent("Transform");
+		this.quadTree = this.gameObject.getComponent("QuadTree");
 		this.debugDraw = false;
 
 		this.collisions = {
@@ -46,7 +49,7 @@ export default class Controller2D extends Behavior {
 
 		// jump
 		if (Input.getKeyDown("space") && this.collisions.below) {
-			console.log("getKeyDown");
+			MessageHub.emit("player_jump", "event: player jumped");
 			this.transform.velocity.y = this.jumpVelocity;
 		}
 
@@ -111,8 +114,9 @@ export default class Controller2D extends Behavior {
 				x: this.raycastOrigins.bottomLeft.x + (this.verticalRaySpacing * i) + this.transform.velocity.x, 
 				y: directionY > 0 ? this.raycastOrigins.bottomLeft.y : this.raycastOrigins.topLeft.y
 			};
-	 
-			let hit = Geometry.RaycastY(this.gameObject.getSiblings(), 
+
+			let hit = Geometry.RaycastY(
+							  this.gameObject.getSiblings(), 
 							  rayOrigin, 
 							  directionY, 
 							  rayLength);
@@ -140,8 +144,9 @@ export default class Controller2D extends Behavior {
 				x: directionX > 0 ? this.raycastOrigins.topRight.x : this.raycastOrigins.topLeft.x, 
 				y: this.raycastOrigins.topLeft.y + (this.horizontalRaySpacing * i)
 			};
-	 
-			let hit = Geometry.RaycastX(this.gameObject.getSiblings(), 
+
+			let hit = Geometry.RaycastX(
+							  this.gameObject.getSiblings(), 
 							  rayOrigin, 
 							  directionX, 
 							  rayLength);

@@ -3,18 +3,22 @@ import Behavior from './Behavior';
 // GameObject
 
 export default class GameObject {
-	constructor(comp = []) {
+	constructor(children=[]) {
 		this.components = [];
-		comp.map(
-			c => this.addComponent(c)
-		);
+		this.children = [];
+		children.map( child => this.addChild(child) );
 	}
 
 	addComponent (component) {
-		component.gameObject = this;
-		console.log(component.constructor.name);
 		this.components.push(component);
+		component.gameObject = this;
 		return component;
+	}
+
+	addChild (child){
+		this.children.push(child);
+		child.parent = this;
+		return child;
 	}
 
 	getComponent (typeInfo){
@@ -38,6 +42,8 @@ export default class GameObject {
 	}
 
 	update (dt) { 
-		this.components.map(c => c.update(dt));
+		this.components.map(c => {
+			if(c.update) c.update(dt);
+		});
 	}
 }
