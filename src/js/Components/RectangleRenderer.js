@@ -14,10 +14,15 @@ export default class RectangleRenderer extends Behavior {
 
 		ctx.save();
 
-		ctx.fillStyle = this.color;
-		ctx.translate(this.transform.x - this.transform.width/2, this.transform.y - this.transform.height/2);
+		ctx.translate(this.transform.x, this.transform.y);
 		ctx.rotate(this.transform.rotation*Math.PI/180);
-		ctx.fillRect(this.transform.width/2, this.transform.height/2, this.transform.width, this.transform.height);
+
+		ctx.fillStyle = this.color;
+		ctx.fillRect(
+			this.transform.bounds.topLeft.x - this.transform.x,
+			this.transform.bounds.topLeft.y  -this.transform.y, 
+			this.transform.width, 
+			this.transform.height);
 
 		ctx.restore();
 	}

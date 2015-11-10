@@ -83,16 +83,16 @@ export default class Controller2D extends Behavior {
 	_updateRaycastOrigins() {
 		this.raycastOrigins = {
 			bottomLeft: {
-				x: this.transform.x + this.skinWidth,
-				y: this.transform.y + this.transform.height - this.skinWidth
+				x: this.transform.x - this.transform.width/2 + this.skinWidth,
+				y: this.transform.y + this.transform.height/2 - this.skinWidth
 			},
 			topLeft: {
-				x: this.transform.x + this.skinWidth,
-				y: this.transform.y + this.skinWidth
+				x: this.transform.x - this.transform.width/2 + this.skinWidth,
+				y: this.transform.y - this.transform.height/2 + this.skinWidth
 			},
 			topRight: {
-				x: this.transform.x + this.transform.width - this.skinWidth,
-				y: this.transform.y + this.skinWidth
+				x: this.transform.x + this.transform.width/2 - this.skinWidth,
+				y: this.transform.y - this.transform.height/2 + this.skinWidth
 			}
 		}
 	}

@@ -33,16 +33,16 @@ export default {
 		for(var i in  objects){
 
 			let rect2 = objects[i].getComponent("Transform");
-			let targetX = direction > 0 ? rect2.x : rect2.x + rect2.width;
+			let targetX = direction > 0 ? rect2.bounds.topLeft.x : rect2.bounds.topRight.x;
 
 			if( direction === 1 ){
-				if(rect2.x <= origin.x) continue;
+				if(rect2.bounds.topLeft.x <= origin.x) continue;
 			}
 			if(direction === -1){
-				if(rect2.x + rect2.width >= origin.x) continue;
+				if(rect2.bounds.topRight.x >= origin.x) continue;
 			}
 			
-			let inYrange = origin.y >= rect2.y && origin.y <= rect2.y + rect2.height;
+			let inYrange = origin.y >= rect2.bounds.topLeft.y && origin.y <= rect2.bounds.bottomLeft.y;
 			let rc = direction * (targetX - origin.x);
 
 			if( inYrange && rc < rayLength ){
@@ -66,16 +66,16 @@ export default {
 		for(var i in  objects){
 
 			let rect2 = objects[i].getComponent("Transform");
-			let targetY = direction > 0 ? rect2.y : rect2.y + rect2.height;
+			let targetY = direction > 0 ? rect2.bounds.topLeft.y : rect2.bounds.bottomLeft.y;
 
 			if( direction === 1 ){
-				if(rect2.y <= origin.y) continue;
+				if(rect2.bounds.topLeft.y <= origin.y) continue;
 			}
 			if(direction === -1){
-				if(rect2.y + rect2.height >= origin.y) continue;
+				if(rect2.bounds.bottomLeft.y >= origin.y) continue;
 			}
 
-			let inXrange = origin.x >= rect2.x && origin.x <= rect2.x + rect2.width;
+			let inXrange = origin.x >= rect2.bounds.topLeft.x && origin.x <= rect2.bounds.topRight.x;
 			let rc = direction * (targetY - origin.y);
 
 			if( inXrange && rc < rayLength ){

@@ -5,7 +5,7 @@ export default class PositionTextRenderer extends Behavior {
 	constructor(gameObject, data){
 		super(gameObject);
 
-		this.goVelcity = this.gameObject.getComponent("Transform").velocity;
+		this.goVelcity = this.gameObject.getComponent("Transform");
 		this.label = data.label || "";
 		this.x = data.x;
 		this.y = data.y;
