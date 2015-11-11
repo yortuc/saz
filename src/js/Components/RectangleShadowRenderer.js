@@ -36,6 +36,11 @@ export default class RectangleShadowRenderer extends Behavior {
 		ctx.fillStyle = this.color;
 		ctx.fillRect(-this.transform.width/2, -this.transform.height/2, this.transform.width, this.transform.height);
 
+				ctx.beginPath();
+		ctx.arc(0, 0, 3, 0, 2 * Math.PI, false);
+		ctx.fillStyle = 'green';
+		ctx.fill();
+
 		ctx.restore();
 	}
 }

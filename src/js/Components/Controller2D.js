@@ -17,11 +17,11 @@ export default class Controller2D extends Behavior {
 		this.timeToJumpApex = data.timeToJumpApex || 0.4;
 		this.accelerationTimeAirborne = data.accelerationTimeAirborne || 0.2;
 		this.accelerationTimeGrounded = data.accelerationTimeGrounded || 0.1;
-		this.quadTree = data.sceneQuadTree.quadTree;
+		// this.quadTree = data.sceneQuadTree.quadTree;
 
 		// private
 		this.skinWidth = 0.015;
-		this.horizontalRayCount = 8;		// one ray from center
+		this.horizontalRayCount = 8;
 		this.horizontalRaySpacing = null;
 		this.verticalRaySpacing = null;
 		this.verticalRayCount = 8;
@@ -48,13 +48,14 @@ export default class Controller2D extends Behavior {
 	update (dt){
 
 		// jump
+		/*
 		if (Input.getKeyDown("space") && this.collisions.below) {
 			MessageHub.emit("player_jump", "event: player jumped");
 			this.transform.velocity.y = this.jumpVelocity;
-		}
+		}*/
 
 		// horizontal movement
-		this.transform.velocity.x = Input.getAxis("horizontal").x * this.moveSpeed;
+		//this.transform.velocity.x = Input.getAxis("horizontal").x * this.moveSpeed;
 		
 		// gravity effect on vertical velocity
 		this.transform.velocity.y += this.gravity * dt/1000;

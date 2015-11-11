@@ -7,11 +7,11 @@ export default class Transform extends Behavior {
 		super(gameObject);
 
 		// private
-		this._x = data.x;
-		this._y = data.y;
+		this._x = data.x || 0;
+		this._y = data.y || 0; 
 		this._rotation = data.rotation || 0; // degrees
 		
-		this.velocity = data.velocity || {x: 0, y: 0};
+		this.velocity = data.velocity || {x: 0, y: 0};
 		this.width = data.width;
 		this.height = data.height;
 		this.anchor = data.anchor || {x: 0.5, y: 0.5};
@@ -29,9 +29,10 @@ export default class Transform extends Behavior {
 		this.y += vector.y;
 	}
 
+	// return global x
 	get x(){
 		if(this.parent){
-			return this.parent.x + this._x - this._y * Math.sin(this.rotation*Math.PI/180);
+			return this.parent.x + this._x; // - this._y * Math.sin(this.rotation*Math.PI/180);
 		}
 		else{
 			return this._x ;
@@ -44,7 +45,7 @@ export default class Transform extends Behavior {
 
 	get y(){ 
 		if(this.parent){
-			return this.parent.y + this._y - (1-Math.cos(this.rotation*Math.PI/180))*this._y;
+			return this.parent.y + this._y; // - (1-Math.cos(this.rotation*Math.PI/180))*this._y;
 		}else{
 			return this._y;
 		}
@@ -55,7 +56,13 @@ export default class Transform extends Behavior {
 	}
 
 	get rotation (){
-		return this._rotation + (this.parent ? this._rotation + this.parent.rotation : 0);
+		if(this.parent){
+			//this.parent = this.gameObject.parent.getComponent("Transform");
+			return this._rotation + this.parent.rotation;
+		}
+		else{
+			return this._rotation;
+		}
 	}
 
 	set rotation (valueRotation){

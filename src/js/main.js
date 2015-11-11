@@ -14,57 +14,50 @@ import Controller2D from './Components/Controller2D';
 import PositionTextRenderer from './Components/PositionTextRenderer';
 import DashRenderer from './Components/DashRenderer';
 import FpsRenderer from './Components/FpsRenderer';
-import Rotator from './Components/Rotator';
+import PlayerController from './Components/PlayerController';
 
 
 Graphics.init(800,600);
 Input.init(); 
 
-/*
-	synthetic sugar
 
-	var player = go(["Transform", { x: 170, y: 50, width: 30, height: 30 }],
-					["Controller2D", { 
-						moveSpeed:6,
-						jumpHeight: 5, 
-						timeToJumpApex: 0.5,
-						accelerationTimeAirborne: 0.2,
-						accelerationTimeGrounded: 0.1 }],
-					["RectangleRenderer", {color: "red" }],
-					["PositionTextRenderer", { x: 20, y: 20 }]);
-
-*/  
- 
 var oyun = new Scene();
-	new Transform(oyun, {x: 0, y: 0, width: 800, height: 600 });
+	new Transform(oyun, {x:0, y: 0, width: 800, height: 600 });
 	var mainSceneQuadTree = new SceneQuadTree(oyun);
 	new SceneQuadTreeNodeRenderer(oyun);
 	new FpsRenderer(oyun, {x: 20, y: 100});
 
 	var player = new GameObject();
-		new Transform(player, { x: 50, y: 50, width: 30, height: 30, rotation: 90 });
+		new Transform(player, { x: 150, y: 50, width: 30, height: 30 });
 		new Controller2D(player, { 
-			moveSpeed:6,					// player x movement velocity
-			jumpHeight: 5, 	 				// 
-			timeToJumpApex: 0.5,			//
-			accelerationTimeAirborne: 0.2,	//
-			accelerationTimeGrounded: 0.1,	//
-			sceneQuadTree: mainSceneQuadTree		// quadTree which will be used for raycasting
-		}); 	 
+			jumpHeight: 5,
+			timeToJumpApex: 0.5
+		});
+		new PlayerController(player, {
+			moveSpeed: 6,
+			jumpHeight: 5,
+			timeToJumpApex: 0.5
+		});
 		new RectangleShadowRenderer(player, "red"); 
 		new PositionTextRenderer(player, {x: 20, y:20, label:"player pos" });
-		new Rotator(player, 5 /* degree per second */);
-	  
-		var kafa = new GameObject(); 
+		
+		var kafa = new GameObject();
 			player.addChild(kafa);
 			new Transform(kafa, {x: 0, y: -20, width: 10, height: 10 });
 			new RectangleRenderer(kafa, "blue");
-
+	  
 	var yer3 = new GameObject();
-		new Transform(yer3, {x: 300, y: 100, width: 160, height: 20, rotation: 20 });
-		new DashRenderer(yer3);
+		new Transform(yer3, {x: 400, y: 400, width: 160, height: 20 });
+		new RectangleRenderer(yer3);
+		new Controller2D(yer3, { 
+			moveSpeed:0,						// player x movement velocity
+			jumpHeight: 0, 	 					// 
+			timeToJumpApex: 0,					//
+			accelerationTimeAirborne: 0.2,		//
+			accelerationTimeGrounded: 0.1,		//
+			sceneQuadTree: mainSceneQuadTree	// quadTree which will be used for raycasting
+		}); 	 
 
-	 
 	var yer2 = new GameObject();
 		new Transform(yer2, {x: 100, y: 250, width: 100, height: 20 });
 		new RectangleRenderer(yer2);
@@ -104,4 +97,24 @@ MessageHub.subscribe("player_jump", function(data){
 });
 
 
+// setInterval(createBody, 1000);
 
+function createBody(){ 
+	var colors = ["red", "green", "blue", "magenta", "orange", "cyan"];
+
+	var _ci = Math.floor( Math.random() * colors.length );
+	var _x = Math.random() * 800,
+		_y = -20;
+
+	var _w = 40 * Math.random();
+
+	var yeniKutu = new GameObject();
+		new Transform(yeniKutu, {x: _x, y: _y, width: 40 + _w, height: 40 + _w});
+		new RectangleRenderer(yeniKutu, colors[_ci]); 
+		new Controller2D(yeniKutu, { 
+			jumpHeight: 5,
+			timeToJumpApex: 0.5
+		}); 
+
+	oyun.addChild( yeniKutu );
+}

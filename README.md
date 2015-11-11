@@ -6,8 +6,9 @@ Component based minimalistic 2D javascript game engine.
 * ✓ simple aa raycasting
 * ✓ raycasting based 2d collision tests
 * ✓ messaging
+* ✓ relative position for child gameobjects
 * ✓ quad tree in scene
 * use quadTree in collision tests
-* relative transformation computations for parent-child relation
-* color utilities (lighten, darken etc...)
 * layering in render functions
+* moving platforms
+* virtual joystick controller component

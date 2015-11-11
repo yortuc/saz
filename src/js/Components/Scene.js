@@ -26,7 +26,7 @@ export default class Scene extends GameObject {
 		const dt =  time - this.lastRender;
 
 		// clear scene
-		this.ctx.clearRect(this.transform.x, this.transform.y, 
+		this.ctx.clearRect(0, 0,
 						   this.transform.width, this.transform.height);
 
 		// update self components

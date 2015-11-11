@@ -42,12 +42,7 @@ export default class GameObject {
 	}
 
 	update (dt) { 
-		this.components.map(c => {
-			if(c.update) c.update(dt);
-		});
-
-		this.children.map(c => {
-			if(c.update) c.update(dt);
-		});
+		this.components.map(c => c.update && c.update(dt));
+		this.children.map(c => c.update && c.update(dt));
 	}
 }
