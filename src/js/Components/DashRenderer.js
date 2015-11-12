@@ -1,7 +1,7 @@
 import Graphics from '../utils/graphics';
 import Behavior from './Behavior';
 
-export default class RectangleRenderer extends Behavior {
+export default class DashRenderer extends Behavior {
 	constructor(gameObject, data){
 		super(gameObject);
 
@@ -10,7 +10,11 @@ export default class RectangleRenderer extends Behavior {
 		this.transform = this.gameObject.getComponent("Transform");
 		this.color = data.color || "black";
 		this.offset = 0;
-		this.expand = data.expand || 2;
+		this.expand = 2;
+		
+		if(data.expand !== null){
+			this.expand = data.expand;
+		}
 	}
 
 	update(dt) {

@@ -1,5 +1,3 @@
-import Behavior from './Behavior';
-
 // GameObject
 
 export default class GameObject {

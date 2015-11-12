@@ -15,11 +15,11 @@ import PositionTextRenderer from './Components/PositionTextRenderer';
 import DashRenderer from './Components/DashRenderer';
 import FpsRenderer from './Components/FpsRenderer';
 import PlayerController from './Components/PlayerController';
+import Update from './Components/Update';
 
 
 Graphics.init(800,600);
 Input.init(); 
-
 
 var oyun = new Scene();
 	new Transform(oyun, {x:0, y: 0, width: 800, height: 600 });
@@ -31,7 +31,8 @@ var oyun = new Scene();
 		new Transform(player, { x: 150, y: 50, width: 30, height: 30 });
 		new Controller2D(player, { 
 			jumpHeight: 5,
-			timeToJumpApex: 0.5
+			timeToJumpApex: 0.5,
+			sceneQuadTree: mainSceneQuadTree
 		});
 		new PlayerController(player, {
 			moveSpeed: 6,
@@ -40,6 +41,10 @@ var oyun = new Scene();
 		});
 		new RectangleShadowRenderer(player, "red"); 
 		new PositionTextRenderer(player, {x: 20, y:20, label:"player pos" });
+		new Update(player, function(dt) {
+			// update code here
+			// console.log(this);
+		}.bind(player));
 		
 		var kafa = new GameObject();
 			player.addChild(kafa);
@@ -47,7 +52,7 @@ var oyun = new Scene();
 			new RectangleRenderer(kafa, "blue");
 	  
 	var yer3 = new GameObject();
-		new Transform(yer3, {x: 400, y: 400, width: 160, height: 20 });
+		new Transform(yer3, {x: 400, y: -200, width: 160, height: 20 });
 		new RectangleRenderer(yer3);
 		new Controller2D(yer3, { 
 			moveSpeed:0,						// player x movement velocity
@@ -59,24 +64,22 @@ var oyun = new Scene();
 		}); 	 
 
 	var yer2 = new GameObject();
-		new Transform(yer2, {x: 100, y: 250, width: 100, height: 20 });
+		new Transform(yer2, {x: 100, y: 250, width: 100, height: 20, scatic: true });
 		new RectangleRenderer(yer2);
 
 	var kutu2 = new GameObject();
-		new Transform(kutu2, {x: 50, y: 360, width: 100, height: 100 });
+		new Transform(kutu2, {x: 50, y: 360, width: 100, height: 100, scatic: true });
 		new RectangleRenderer(kutu2);
 
 	var kutu = new GameObject();
-		new Transform(kutu, {x: 360, y: 550, width: 60, height: 60 });
+		new Transform(kutu, {x: 360, y: 550, width: 60, height: 60, scatic: true });
 		new RectangleRenderer(kutu);
 
 	var yer = new GameObject();
-		new Transform(yer, {x: 400, y: 590, width: 800, height: 20 });
-		new RectangleRenderer(yer);
-
+		new Transform(yer, {x: 400, y: 590, width: 800, height: 20, scatic: true });
+		new RectangleRenderer(yer, "orange");
 
 oyun.setChildren([ yer2, yer3, kutu, kutu2, yer, player ]);
-mainSceneQuadTree.quadTree.addObject(player);
 oyun.start();
 
 MessageHub.init([

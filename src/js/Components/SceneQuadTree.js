@@ -12,6 +12,8 @@ export default class SceneQuadTree extends Behavior {
 		this.transform = this.gameObject.getComponent("Transform");
 		this.quadTree = null;
 
+		this.objects = [];
+
 		this.initQuadTree();
 	}
 
@@ -26,7 +28,18 @@ export default class SceneQuadTree extends Behavior {
 		console.log(this.quadTree);
 	}
 
+	init() {
+		// get objects inside quadtree and place them
+
+	}
+
+	// get object within the same node
+	filterObjects(refObject) {
+
+	}
+
 	update (dt){
-		//
+		// refresh object node-positions
+		this.objects.map(o=> placeObject)
 	}
 }

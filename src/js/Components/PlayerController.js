@@ -19,7 +19,6 @@ export default class PlayerController extends Behavior {
 		this.timeToJumpApex = data.timeToJumpApex || 0.4;
 		this.gravity = (2 * this.jumpHeight) / Math.pow (this.timeToJumpApex, 2);
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
-		
 	}
 
 	update(dt){

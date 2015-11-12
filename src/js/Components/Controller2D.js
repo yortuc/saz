@@ -17,7 +17,7 @@ export default class Controller2D extends Behavior {
 		this.timeToJumpApex = data.timeToJumpApex || 0.4;
 		this.accelerationTimeAirborne = data.accelerationTimeAirborne || 0.2;
 		this.accelerationTimeGrounded = data.accelerationTimeGrounded || 0.1;
-		// this.quadTree = data.sceneQuadTree.quadTree;
+		this.quadTree = data.sceneQuadTree && data.sceneQuadTree.quadTree;
 
 		// private
 		this.skinWidth = 0.015;
@@ -82,20 +82,7 @@ export default class Controller2D extends Behavior {
 	}
 
 	_updateRaycastOrigins() {
-		this.raycastOrigins = {
-			bottomLeft: {
-				x: this.transform.x - this.transform.width/2 + this.skinWidth,
-				y: this.transform.y + this.transform.height/2 - this.skinWidth
-			},
-			topLeft: {
-				x: this.transform.x - this.transform.width/2 + this.skinWidth,
-				y: this.transform.y - this.transform.height/2 + this.skinWidth
-			},
-			topRight: {
-				x: this.transform.x + this.transform.width/2 - this.skinWidth,
-				y: this.transform.y - this.transform.height/2 + this.skinWidth
-			}
-		}
+		this.raycastOrigins = this.transform.bounds;
 	}
 
 	_computeRaySpacing(){
