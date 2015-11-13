@@ -32,6 +32,7 @@ var oyun = new Scene();
 		new Controller2D(player, { 
 			jumpHeight: 5,
 			timeToJumpApex: 0.5,
+			wallFriction: 0.9,
 			sceneQuadTree: mainSceneQuadTree
 		});
 		new PlayerController(player, {
@@ -52,16 +53,9 @@ var oyun = new Scene();
 			new RectangleRenderer(kafa, "blue");
 	  
 	var yer3 = new GameObject();
-		new Transform(yer3, {x: 400, y: -200, width: 160, height: 20 });
+		new Transform(yer3, {x: 700, y: 325, width: 50, height: 550 });
 		new RectangleRenderer(yer3);
-		new Controller2D(yer3, { 
-			moveSpeed:0,						// player x movement velocity
-			jumpHeight: 0, 	 					// 
-			timeToJumpApex: 0,					//
-			accelerationTimeAirborne: 0.2,		//
-			accelerationTimeGrounded: 0.1,		//
-			sceneQuadTree: mainSceneQuadTree	// quadTree which will be used for raycasting
-		}); 	 
+
 
 	var yer2 = new GameObject();
 		new Transform(yer2, {x: 100, y: 250, width: 100, height: 20, scatic: true });
@@ -72,7 +66,7 @@ var oyun = new Scene();
 		new RectangleRenderer(kutu2);
 
 	var kutu = new GameObject();
-		new Transform(kutu, {x: 360, y: 550, width: 60, height: 60, scatic: true });
+		new Transform(kutu, {x: 500, y: 550, width: 60, height: 60, scatic: true });
 		new RectangleRenderer(kutu);
 
 	var yer = new GameObject();

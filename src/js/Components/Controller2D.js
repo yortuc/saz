@@ -17,7 +17,8 @@ export default class Controller2D extends Behavior {
 		this.timeToJumpApex = data.timeToJumpApex || 0.4;
 		this.accelerationTimeAirborne = data.accelerationTimeAirborne || 0.2;
 		this.accelerationTimeGrounded = data.accelerationTimeGrounded || 0.1;
-		this.quadTree = data.sceneQuadTree && data.sceneQuadTree.quadTree;
+		this.quadTree = data.sceneQuadTree;
+		this.wallFriction = data.wallFriction || 1;
 
 		// private
 		this.skinWidth = 0.015;
@@ -46,16 +47,6 @@ export default class Controller2D extends Behavior {
 	}
 
 	update (dt){
-
-		// jump
-		/*
-		if (Input.getKeyDown("space") && this.collisions.below) {
-			MessageHub.emit("player_jump", "event: player jumped");
-			this.transform.velocity.y = this.jumpVelocity;
-		}*/
-
-		// horizontal movement
-		//this.transform.velocity.x = Input.getAxis("horizontal").x * this.moveSpeed;
 		
 		// gravity effect on vertical velocity
 		this.transform.velocity.y += this.gravity * dt/1000;
@@ -104,7 +95,7 @@ export default class Controller2D extends Behavior {
 			};
 
 			let hit = Geometry.RaycastY(
-							  this.gameObject.getSiblings(), 
+							  this.quadTree.filterObjects( this.gameObject, 250 ),
 							  rayOrigin, 
 							  directionY, 
 							  rayLength);
@@ -134,7 +125,7 @@ export default class Controller2D extends Behavior {
 			};
 
 			let hit = Geometry.RaycastX(
-							  this.gameObject.getSiblings(), 
+							  this.quadTree.filterObjects( this.gameObject, 100 ),
 							  rayOrigin, 
 							  directionX, 
 							  rayLength);
@@ -149,6 +140,9 @@ export default class Controller2D extends Behavior {
 
 				this.collisions.right = directionX === 1;
 				this.collisions.left = directionX === -1;
+
+				// vertical friction
+				velocity.y *= this.wallFriction;
 			}
 		}
 	}

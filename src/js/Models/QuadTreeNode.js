@@ -10,12 +10,26 @@ class QuadTreeNode {
 		this.objects = [];			// containing elements of leaf node
 	}
 
+	clear() {
+
+		if(this.subNodes.length === 0){
+			this.objects = [];
+		} else {
+			this.subNodes.map(s=> {
+				s.clear();
+			});	
+			this.subNodes = [];
+		}
+	}
+
 	addObject(object){
 		if(this.subNodes.length === 0){
 			// leaf node, add object to self if not already in array
 			if( !this.objects.find(s=> s === object) ){
 				this.objects.push(object);
 				console.log("object in node", this, object);
+
+				return this; // return node
 			}
 		}
 		else {

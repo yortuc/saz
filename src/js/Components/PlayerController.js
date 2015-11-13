@@ -17,13 +17,14 @@ export default class PlayerController extends Behavior {
 		this.moveSpeed = data.moveSpeed || 6;
 		this.jumpHeight = data.jumpHeight || 2;
 		this.timeToJumpApex = data.timeToJumpApex || 0.4;
+
 		this.gravity = (2 * this.jumpHeight) / Math.pow (this.timeToJumpApex, 2);
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
 	}
 
 	update(dt){
 		// jump
-		if (Input.getKeyDown("space") && this.controller2D.collisions.below) {
+		if (Input.getKeyDown("space") && ( this.controller2D.collisions.below || this.controller2D.collisions.right) ) {
 			MessageHub.emit("player_jump", "event: player jumped");
 			this.transform.velocity.y = this.jumpVelocity;
 		}
