@@ -35,7 +35,7 @@ var oyun = new Scene();
 			jumpHeight: 5,
 			timeToJumpApex: 0.5,
 			wallFriction: 0.9,
-			sceneQuadTree: mainSceneQuadTree
+			//sceneQuadTree: mainSceneQuadTree
 		});
 		new PlayerController(player, {
 			moveSpeed: 6,
@@ -55,7 +55,7 @@ var oyun = new Scene();
 		new RectangleRenderer(yer3);
 
 	var yer2 = new GameObject();
-		new Transform(yer2, {x: 100, y: 530, width: 100, height: 20, scatic: true });
+		new Transform(yer2, {x: 140, y: 530, width: 100, height: 20, scatic: true });
 		new RectangleRenderer(yer2);
 		new PlatformController(yer2);
 

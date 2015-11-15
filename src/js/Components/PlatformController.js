@@ -10,7 +10,7 @@ export default class PlatformController extends RaycastController {
 		super(gameObject, data);
 		this.quadTree = data.sceneQuadTree;
 
-		this.velocity = {x: 1, y:0};
+		this.velocity = data.velocity || {x: 0, y: -1};
 
 		this.computeRaySpacing();
 		this.updateRaycastOrigins();
@@ -29,15 +29,16 @@ export default class PlatformController extends RaycastController {
 		let movedPassengers = [];
 
 		this._horizontalHit(velocity, movedPassengers);
-		// this._verticalHit(velocity, movedPassengers);
+		this._verticalHit(velocity, movedPassengers);
+
 		this._verticalStand(velocity, movedPassengers);
 	}
 
 	// Passenger on top of a horizontally or downward moving platform
 	_verticalStand(velocity, movedPassengers){
-		let directionY = 1; // Math.sign (velocity.y);
+		let directionY = Math.sign (velocity.y);
 
-		if (directionY === -1 || ( velocity.y == 0 && velocity.x != 0)) {
+		if (directionY === -1 || velocity.y == 0 && velocity.x != 0 ) {
 			let rayLength = this.skinWidth * 2;
 			
 			for (let i = 0; i < this.verticalRayCount; i ++) {
@@ -53,10 +54,10 @@ export default class PlatformController extends RaycastController {
 				let hit = Geometry.RaycastY(
 								  objectsToCollide,
 								  rayOrigin, 
-								  -1, 
+								  directionY, 
 								  rayLength);		
 
-				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + -1 * rayLength*200 }, "green");
+				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*200 }, "green");
 		
 				if (hit) {
 					let targetTransform = hit.targetObject.getComponent("Transform");
@@ -111,6 +112,47 @@ export default class PlatformController extends RaycastController {
 						let pushY = 0;
 						
 						targetTransform.Translate( {x: pushX, y:pushY} );
+					}
+				}
+			}
+		}
+	}
+
+	// Vertically moving platform
+	_verticalHit (velocity, movedPassengers) {
+
+		let directionY = Math.sign (velocity.y);
+
+		if (velocity.y != 0) {
+			let rayLength = Math.abs (velocity.y) + this.skinWidth;
+			
+			for (let i = 0; i < this.verticalRayCount; i ++) {
+				
+				let rayOrigin = {
+					x: this.raycastOrigins.bottomLeft.x + (this.verticalRaySpacing * i) + this.transform.velocity.x, 
+					y: directionY > 0 ? this.raycastOrigins.bottomLeft.y : this.raycastOrigins.topLeft.y
+				};
+
+				let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
+												   	   this.gameObject.getSiblings();
+				
+				let hit = Geometry.RaycastY(
+								  objectsToCollide,
+								  rayOrigin, 
+								  directionY, 
+								  rayLength);
+
+				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*10 }, "green");
+
+				if (hit) {
+					let targetTransform = hit.targetObject.getComponent("Transform");
+
+					if (movedPassengers.indexOf(targetTransform)) {
+						movedPassengers.push(targetTransform);
+						let pushX = velocity.x;
+						let pushY = velocity.y - (hit.distance - this.skinWidth) * directionY;
+
+						targetTransform.Translate({x: pushX, y: pushY});
 					}
 				}
 			}
