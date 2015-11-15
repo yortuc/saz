@@ -25,10 +25,10 @@ export default {
          }
 	},
 
-	// filter objects within the same quadTree node (optional)
 	RaycastX: function (objects, origin, direction, rayLength){
 		
 		let closest = null;
+		let targetObject = null;
 
 		for(var i in  objects){
 
@@ -47,12 +47,14 @@ export default {
 
 			if( inYrange && rc < rayLength ){
 				closest = rc;
+				targetObject = objects[i];
 			}
 		}
 
 		if(closest) {
 			return {
-				distance: closest
+				distance: closest,
+				targetObject: targetObject
 			}
 		}else {
 			return null;
@@ -62,6 +64,7 @@ export default {
 	RaycastY: function (objects, origin, direction, rayLength){
 
 		let closest = null;
+		let targetObject = null;
 
 		for(var i in  objects){
 
@@ -80,12 +83,14 @@ export default {
 
 			if( inXrange && rc < rayLength ){
 				closest = rc;
+				targetObject = objects[i];
 			}
 		}
 
 		if(closest) {
 			return {
-				distance: closest
+				distance: closest,
+				targetObject: targetObject
 			}
 		}else {
 			return null;

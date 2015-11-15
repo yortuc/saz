@@ -1,4 +1,4 @@
-import Behavior from './Behavior';
+import Behavior from '../Core/Behavior';
 import QuadTreeNode from '../Models/QuadTreeNode';
 import Geometry from '../utils/Geometry';
 

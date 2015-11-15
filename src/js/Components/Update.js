@@ -1,4 +1,4 @@
-import Behavior from './Behavior';
+import Behavior from '../Core/Behavior';
 
 // General update behavior for game object
 

@@ -1,15 +1,12 @@
-import Graphics from '../utils/graphics';
 import Geometry from '../utils/geometry';
-import Input from '../utils/input';
-import MessageHub from '../utils/messageHub';
+import RaycastController from './RaycastController';
+import Graphics from '../utils/graphics'; 
 
-import Behavior from './Behavior';
-
-
-export default class Controller2D extends Behavior {
+// extends RaycastController
+export default class Controller2D extends RaycastController {
 	
 	constructor(gameObject, data){
-		super(gameObject);
+		super(gameObject, data);
 
 		// props
 		this.moveSpeed = data.moveSpeed || 6;
@@ -21,17 +18,9 @@ export default class Controller2D extends Behavior {
 		this.wallFriction = data.wallFriction || 1;
 
 		// private
-		this.skinWidth = 0.015;
-		this.horizontalRayCount = 8;
-		this.horizontalRaySpacing = null;
-		this.verticalRaySpacing = null;
-		this.verticalRayCount = 8;
-		this.verticalRaySpacing = null;
 		this.gravity = (2 * this.jumpHeight) / Math.pow (this.timeToJumpApex, 2);
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
-		this.raycastOrigins = null;
 		this.transform = this.gameObject.getComponent("Transform");
-		this.debugDraw = false;
 
 		this.collisions = {
 			reset: function(){ 
@@ -42,11 +31,13 @@ export default class Controller2D extends Behavior {
 			left: false, right: false
 		}
 		
-		this._computeRaySpacing();
-		this._updateRaycastOrigins();
+		this.computeRaySpacing();
+		this.updateRaycastOrigins();
 	}
 
 	update (dt){
+		// update raycast source points on the gameobject
+		this.updateRaycastOrigins();
 		
 		// gravity effect on vertical velocity
 		this.transform.velocity.y += this.gravity * dt/1000;
@@ -59,7 +50,6 @@ export default class Controller2D extends Behavior {
 	Move(velocity) {
 
 		this.collisions.reset();
-		this._updateRaycastOrigins();
 		
 		if ( velocity.x != 0 ) {
 			this._horizontalCollisions (/*ref*/ velocity);
@@ -70,16 +60,6 @@ export default class Controller2D extends Behavior {
 		}
 
 		this.transform.Translate (velocity);
-	}
-
-	_updateRaycastOrigins() {
-		this.raycastOrigins = this.transform.bounds;
-	}
-
-	_computeRaySpacing(){
-		this.verticalRaySpacing = (this.transform.width - 2*this.skinWidth) / (this.verticalRayCount-1);
-		this.horizontalRaySpacing = (this.transform.height - 2*this.skinWidth) / (this.horizontalRayCount-1);
-		console.log(this.horizontalRaySpacing, this.verticalRaySpacing);
 	}
 
 	// @param ref velocity : V2
@@ -94,8 +74,11 @@ export default class Controller2D extends Behavior {
 				y: directionY > 0 ? this.raycastOrigins.bottomLeft.y : this.raycastOrigins.topLeft.y
 			};
 
+			let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
+												   this.gameObject.getSiblings();
+
 			let hit = Geometry.RaycastY(
-							  this.quadTree.filterObjects( this.gameObject ),
+							  objectsToCollide,
 							  rayOrigin, 
 							  directionY, 
 							  rayLength);
@@ -124,8 +107,11 @@ export default class Controller2D extends Behavior {
 				y: this.raycastOrigins.topLeft.y + (this.horizontalRaySpacing * i)
 			};
 
+			let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
+												   this.gameObject.getSiblings();
+
 			let hit = Geometry.RaycastX(
-							  this.quadTree.filterObjects( this.gameObject ),
+							  objectsToCollide,
 							  rayOrigin, 
 							  directionX, 
 							  rayLength);

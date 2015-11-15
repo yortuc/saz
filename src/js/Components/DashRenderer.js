@@ -1,5 +1,5 @@
 import Graphics from '../utils/graphics';
-import Behavior from './Behavior';
+import Behavior from '../Core/Behavior';
 
 export default class DashRenderer extends Behavior {
 	constructor(gameObject, data){

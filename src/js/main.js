@@ -1,21 +1,23 @@
+// services
 import Input from './utils/input'; 
 import Graphics from './utils/graphics'; 
 import MessageHub from './utils/messageHub';
 
-import Scene from './Components/Scene';  
+// core
+import GameObject from './Core/GameObject';
+import Scene from './Core/Scene';  
+
+// components
 import SceneQuadTree from './Components/SceneQuadTree';
 import SceneQuadTreeNodeRenderer from './Components/SceneQuadTreeNodeRenderer';
-
-import GameObject from './Components/GameObject';
 import Transform from './Components/Transform';
 import RectangleRenderer from './Components/RectangleRenderer';
 import RectangleShadowRenderer from './Components/RectangleShadowRenderer';
 import Controller2D from './Components/Controller2D';
 import PositionTextRenderer from './Components/PositionTextRenderer';
-//import DashRenderer from './Components/DashRenderer';
 import FpsRenderer from './Components/FpsRenderer';
 import PlayerController from './Components/PlayerController';
-//import Update from './Components/Update';
+import PlatformController from './Components/PlatformController';
 
 
 Graphics.init(800,600);
@@ -52,17 +54,17 @@ var oyun = new Scene();
 		new Transform(yer3, {x: 700, y: 325, width: 50, height: 550 });
 		new RectangleRenderer(yer3);
 
-
 	var yer2 = new GameObject();
-		new Transform(yer2, {x: 100, y: 250, width: 100, height: 20, scatic: true });
+		new Transform(yer2, {x: 100, y: 530, width: 100, height: 20, scatic: true });
 		new RectangleRenderer(yer2);
+		new PlatformController(yer2);
 
 	var kutu2 = new GameObject();
 		new Transform(kutu2, {x: 50, y: 360, width: 100, height: 100, scatic: true });
 		new RectangleRenderer(kutu2);
 
 	var kutu = new GameObject();
-		new Transform(kutu, {x: 500, y: 550, width: 60, height: 60, scatic: true });
+		new Transform(kutu, {x: 300, y: 530, width: 60, height: 60, scatic: true });
 		new RectangleRenderer(kutu);
 
 	var yer = new GameObject();
@@ -76,7 +78,7 @@ MessageHub.init([
 
 MessageHub.subscribe("player_jump", function(data){
 	console.log("player_jump", data);
-	mainSceneQuadTree.insert(createBody());	
+	//mainSceneQuadTree.insert(createBody());	
 });
 
 function createBody(){ 
@@ -89,7 +91,7 @@ function createBody(){ 
 	var _w = 40 * Math.random();
 
 	var yeniKutu = new GameObject();
-		new Transform(yeniKutu, {x: _x, y: _y, width: 40 + _w, height: 40 + _w, static: true});
+		new Transform(yeniKutu, {x: _x, y: _y, width: 40 + _w, height: 40 + _w });
 		new RectangleRenderer(yeniKutu, colors[_ci]); 
 
 	oyun.addChild( yeniKutu );

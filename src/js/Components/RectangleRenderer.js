@@ -1,6 +1,6 @@
 // RectangleRenderer 
 import Graphics from '../utils/graphics';
-import Behavior from './Behavior';
+import Behavior from '../Core/Behavior';
 
 export default class RectangleRenderer extends Behavior {
 	constructor(gameObject, color="black"){

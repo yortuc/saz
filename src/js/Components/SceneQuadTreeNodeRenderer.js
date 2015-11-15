@@ -1,4 +1,4 @@
-import Behavior from './Behavior';
+import Behavior from '../Core/Behavior';
 import Graphics from '../utils/graphics';
 
 export default class SceneQuadTreeNodeRenderer extends Behavior  {

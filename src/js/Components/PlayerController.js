@@ -3,7 +3,7 @@ import Geometry from '../utils/geometry';
 import Input from '../utils/input';
 import MessageHub from '../utils/messageHub';
 
-import Behavior from './Behavior';
+import Behavior from '../Core/Behavior';
 
 
 export default class PlayerController extends Behavior {
