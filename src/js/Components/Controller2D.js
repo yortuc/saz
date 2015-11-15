@@ -84,7 +84,7 @@ export default class Controller2D extends Behavior {
 
 	// @param ref velocity : V2
 	_verticalCollisions(velocity) {
-		let directionY = Math.sign (velocity.y);
+		let directionY = velocity.y > 0 ? 1: -1;
 		let rayLength = Math.abs (velocity.y) + this.skinWidth;
 
 		for (let i = 0; i < this.verticalRayCount; i ++) {
@@ -95,7 +95,7 @@ export default class Controller2D extends Behavior {
 			};
 
 			let hit = Geometry.RaycastY(
-							  this.quadTree.filterObjects( this.gameObject, 250 ),
+							  this.quadTree.filterObjects( this.gameObject ),
 							  rayOrigin, 
 							  directionY, 
 							  rayLength);
@@ -125,7 +125,7 @@ export default class Controller2D extends Behavior {
 			};
 
 			let hit = Geometry.RaycastX(
-							  this.quadTree.filterObjects( this.gameObject, 100 ),
+							  this.quadTree.filterObjects( this.gameObject ),
 							  rayOrigin, 
 							  directionX, 
 							  rayLength);

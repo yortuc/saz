@@ -12,10 +12,10 @@ import RectangleRenderer from './Components/RectangleRenderer';
 import RectangleShadowRenderer from './Components/RectangleShadowRenderer';
 import Controller2D from './Components/Controller2D';
 import PositionTextRenderer from './Components/PositionTextRenderer';
-import DashRenderer from './Components/DashRenderer';
+//import DashRenderer from './Components/DashRenderer';
 import FpsRenderer from './Components/FpsRenderer';
 import PlayerController from './Components/PlayerController';
-import Update from './Components/Update';
+//import Update from './Components/Update';
 
 
 Graphics.init(800,600);
@@ -42,10 +42,6 @@ var oyun = new Scene();
 		});
 		new RectangleShadowRenderer(player, "red"); 
 		new PositionTextRenderer(player, {x: 20, y:20, label:"player pos" });
-		new Update(player, function(dt) {
-			// update code here
-			// console.log(this);
-		}.bind(player));
 		
 		var kafa = new GameObject();
 			player.addChild(kafa);
@@ -73,9 +69,6 @@ var oyun = new Scene();
 		new Transform(yer, {x: 400, y: 590, width: 800, height: 20, scatic: true });
 		new RectangleRenderer(yer, "orange");
 
-oyun.setChildren([ yer2, yer3, kutu, kutu2, yer, player ]);
-oyun.start();
-
 MessageHub.init([
 	/*channels*/ 
 	"player_jump"
@@ -83,35 +76,28 @@ MessageHub.init([
 
 MessageHub.subscribe("player_jump", function(data){
 	console.log("player_jump", data);
-
-	mainSceneQuadTree.quadTree.subNodes.map(s=>{
-		if(s.subNodes.length === 0){
-			if(s.objects.length > 0){
-				console.log(s)
-			}
-		}
-	});
+	mainSceneQuadTree.insert(createBody());	
 });
-
-
-// setInterval(createBody, 1000);
 
 function createBody(){ 
 	var colors = ["red", "green", "blue", "magenta", "orange", "cyan"];
 
 	var _ci = Math.floor( Math.random() * colors.length );
 	var _x = Math.random() * 800,
-		_y = -20;
+		_y = Math.random() * 600;
 
 	var _w = 40 * Math.random();
 
 	var yeniKutu = new GameObject();
-		new Transform(yeniKutu, {x: _x, y: _y, width: 40 + _w, height: 40 + _w});
+		new Transform(yeniKutu, {x: _x, y: _y, width: 40 + _w, height: 40 + _w, static: true});
 		new RectangleRenderer(yeniKutu, colors[_ci]); 
-		new Controller2D(yeniKutu, { 
-			jumpHeight: 5,
-			timeToJumpApex: 0.5
-		}); 
 
 	oyun.addChild( yeniKutu );
+
+	return yeniKutu;
 }
+
+// setInterval(createBody, 1000);
+oyun.setChildren([ yer2, yer3, kutu, kutu2, yer, player ]);
+
+oyun.start();

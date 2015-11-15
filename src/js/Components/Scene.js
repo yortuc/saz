@@ -29,6 +29,11 @@ export default class Scene extends GameObject {
 		this.ctx.clearRect(0, 0,
 						   this.transform.width, this.transform.height);
 
+		this.ctx.save();
+		this.ctx.fillStyle = "#fff";
+		this.ctx.fillRect(0,0,this.transform.width, this.transform.height)
+		this.ctx.restore();
+
 		// update self components
 		this.components.map(s=> {
 			if(s.update) {

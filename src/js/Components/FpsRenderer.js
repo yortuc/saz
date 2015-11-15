@@ -16,7 +16,7 @@ export default class FpsRenderer extends Behavior {
 		let text = "fps: " + Math.floor(1000/dt).toString();
 		
 		ctx.save();
-		ctx.font = "16px Arial";
+		ctx.font = "16px ArialMT";
 		ctx.fillStyle="green";
 		ctx.fillText(text, this.x, this.y);
 		ctx.restore();

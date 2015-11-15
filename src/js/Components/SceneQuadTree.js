@@ -12,11 +12,21 @@ export default class SceneQuadTree extends Behavior {
 		this.quadTree = new QuadTreeNode( 0, 0, this.transform.width, this.transform.height );
 	}
 
-	addObject(object) {
-
+	filterObjects(refObject) {
+		return this.quadTree.retrieve([], refObject);
 	}
 
-	filterObjects(refObject) {
-		return this.gameObject.children;
+	insert(object){
+		this.quadTree.insert(object);
+	}
+
+	update(dt) {
+		// clear quad tree in every frame
+		this.quadTree.clear();
+
+		// add all objects to quad-tree
+		this.gameObject.children.map(c=> 
+			this.quadTree.insert(c)
+		);
 	}
 }
