@@ -18,7 +18,7 @@ export default class RectangleRenderer extends Behavior {
 	
 		ctx.fillStyle = this.color;
 		ctx.fillRect(
-			-this.transform.width/2,
+			-(0.5 + this.transform.width/2) << 0,
 			-this.transform.height/2, 
 			this.transform.width, 
 			this.transform.height);

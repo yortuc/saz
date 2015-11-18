@@ -7,7 +7,6 @@ export default class Scene extends GameObject {
 
 	constructor(children=[]) {
 		super(children);
-		this.ctx = Graphics.ctx;
 	}
 
 	setChildren(children=[]){
@@ -26,13 +25,7 @@ export default class Scene extends GameObject {
 		const dt =  time - this.lastRender;
 
 		// clear scene
-		this.ctx.clearRect(0, 0,
-						   this.transform.width, this.transform.height);
-
-		this.ctx.save();
-		this.ctx.fillStyle = "#fff";
-		this.ctx.fillRect(0,0,this.transform.width, this.transform.height)
-		this.ctx.restore();
+		Graphics.clearScene();
 
 		// update self components
 		this.components.map(s=> {
@@ -47,7 +40,7 @@ export default class Scene extends GameObject {
 				g.update(dt);
 			}
 		});
-		
+
 		this.lastRender = time;
 
 		// call next frame

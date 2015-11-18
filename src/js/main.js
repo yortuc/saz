@@ -19,6 +19,8 @@ import FpsRenderer from './Components/FpsRenderer';
 import PlayerController from './Components/PlayerController';
 import PlatformController from './Components/PlatformController';
 
+import Popup from './Components/Popup';
+
 
 Graphics.init(800,600);
 Input.init(); 
@@ -29,7 +31,7 @@ var oyun = new Scene();
 	new SceneQuadTreeNodeRenderer(oyun);
 	new FpsRenderer(oyun, {x: 20, y: 100});
 
-	var player = new GameObject();
+	var player = new GameObject({layer: "front"});
 		new Transform(player, { x: 150, y: 50, width: 30, height: 30 });
 		new Controller2D(player, { 
 			jumpHeight: 5,
@@ -53,19 +55,22 @@ var oyun = new Scene();
 	var yer3 = new GameObject();
 		new Transform(yer3, {x: 700, y: 325, width: 50, height: 550 });
 		new RectangleRenderer(yer3);
+		new Popup(yer3);
 
-	var yer2 = new GameObject();
-		new Transform(yer2, {x: 140, y: 530, width: 100, height: 20, scatic: true });
+	var yer2 = new GameObject({layer: "platforms"});
+		new Transform(yer2, {x: 160, y: 530, width: 100, height: 20, scatic: true });
 		new RectangleRenderer(yer2);
-		new PlatformController(yer2);
+		new PlatformController(yer2, {collisionLayer: "front"});
 
 	var kutu2 = new GameObject();
 		new Transform(kutu2, {x: 50, y: 360, width: 100, height: 100, scatic: true });
 		new RectangleRenderer(kutu2);
+		new Popup(kutu2);
 
 	var kutu = new GameObject();
 		new Transform(kutu, {x: 300, y: 530, width: 60, height: 60, scatic: true });
 		new RectangleRenderer(kutu);
+		new Popup(kutu);
 
 	var yer = new GameObject();
 		new Transform(yer, {x: 400, y: 590, width: 800, height: 20, scatic: true });

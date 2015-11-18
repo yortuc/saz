@@ -9,6 +9,10 @@ Component based minimalistic 2D javascript game engine.
 * ✓ relative position for child gameobjects
 * ✓ quad tree in scene
 * ✓ use quadTree in collision tests
-* moving platforms
+* ✓ moving platforms
+* touch joystick component
+* level editor
+
+* simple tweening and easing functionalities
+* vector class
 * layering in render functions
-* virtual joystick controller component

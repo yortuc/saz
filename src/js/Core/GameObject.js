@@ -1,10 +1,12 @@
 // GameObject
 
 export default class GameObject {
-	constructor(children=[]) {
+	constructor(data) {
+		data = data || {};
+		
+		this.layer = data.layer || null;
 		this.components = [];
 		this.children = [];
-		children.map( child => this.addChild(child) );
 	}
 
 	addComponent (component) {

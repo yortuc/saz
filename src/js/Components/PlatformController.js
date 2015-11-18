@@ -10,7 +10,8 @@ export default class PlatformController extends RaycastController {
 		super(gameObject, data);
 		this.quadTree = data.sceneQuadTree;
 
-		this.velocity = data.velocity || {x: 0, y: -1};
+		this.velocity = data.velocity || {x: 1, y: 0};
+		this.collisionLayer = data.collisionLayer;
 
 		this.computeRaySpacing();
 		this.updateRaycastOrigins();
@@ -48,16 +49,16 @@ export default class PlatformController extends RaycastController {
 					y: this.raycastOrigins.topLeft.y
 				};
 
-				let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
-												   this.gameObject.getSiblings();
+				let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject, this.collisionLayer ) : 
+												   this.gameObject.getSiblings(this.collisionLayer);
 
 				let hit = Geometry.RaycastY(
 								  objectsToCollide,
 								  rayOrigin, 
-								  directionY, 
+								  -1, 
 								  rayLength);		
 
-				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*200 }, "green");
+				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + -1 * rayLength*200 }, "green");
 		
 				if (hit) {
 					let targetTransform = hit.targetObject.getComponent("Transform");
@@ -90,8 +91,8 @@ export default class PlatformController extends RaycastController {
 					y: this.raycastOrigins.topLeft.y + (this.horizontalRaySpacing * i)
 				};
 				
-				let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
-												   this.gameObject.getSiblings();
+				let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject, this.collisionLayer ) : 
+												   this.gameObject.getSiblings(this.collisionLayer);
 
 				let hit = Geometry.RaycastX(
 							  objectsToCollide,

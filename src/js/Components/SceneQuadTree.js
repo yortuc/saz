@@ -12,8 +12,8 @@ export default class SceneQuadTree extends Behavior {
 		this.quadTree = new QuadTreeNode( 0, 0, this.transform.width, this.transform.height );
 	}
 
-	filterObjects(refObject) {
-		return this.quadTree.retrieve([], refObject);
+	filterObjects(refObject, layer) {
+		return this.quadTree.retrieve([], refObject, layer);
 	}
 
 	insert(object){

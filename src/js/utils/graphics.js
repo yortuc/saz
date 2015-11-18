@@ -8,6 +8,10 @@ export default {
 		this.ctx = document.getElementById("canvas").getContext("2d");
 	},
 
+	clearScene: function(){
+		this.ctx.clearRect(0, 0, this.width, this.height);
+	},
+
 	line: function (p1, p2, color) {
 		this.ctx.save();
 		this.ctx.strokeStyle = color || "red";
