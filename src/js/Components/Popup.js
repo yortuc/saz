@@ -8,23 +8,49 @@ export default class Popup extends Behavior {
 		this.transform = this.gameObject.getComponent("Transform");
 
 		// target values
-		this.targetY = this.transform.y;
-		this.targetHeight = this.transform.height;
+		this.startHeight = this.transform.height * 0.6;
+		this.dH = this.transform.height * 0.4;
 
-		this.working = true;
-		this.ease = 0.2;
-		this.currentHeight = 0;
-		this.currentY = this.targetY + this.targetHeight/2;
+		this.startY = this.targetY + this.targetHeight/2;
+		this.targetY = this.transform.y;
+		this.dY = this.targetHeight / 2;
+
+		this.timeElapsed = 0;
+		this.duration = 500;
 	}
 
 	update(dt){
-		this.currentHeight += (this.targetHeight - this.currentHeight) * this.ease;
+		this.timeElapsed += dt;
+		if(this.timeElapsed < this.duration) {
+			this.transform.height = this.easeInOut(this.timeElapsed, this.startHeight, this.dH, this.duration);
+			//this.transform.y = this.easeIn(this.timeElapsed, this.startY, -this.dY, this.duration);
+		}
+	}
 
-		this.currentY += (this.targetY - this.currentY) * this.ease;
+	// t: current time, b: begInnIng value, c: change In value, d: duration
 
-		this.transform.height = this.currentHeight;
-		this.transform.y = this.currentY;
+	easeOut (t, b, c, d) {
+		if ((t/=d) < (1/2.75)) {
+			return c*(7.5625*t*t) + b;
+		} else if (t < (2/2.75)) {
+			return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+		} else if (t < (2.5/2.75)) {
+			return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+		} else {
+			return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+		}
+	}
 
-		this.working = (this.targetHeight - this.currentHeight) > 0.1;
+	easeIn (t, b, c, d) {
+		return c - this.easeOut (d-t, 0, c, d) + b;
+	}
+
+	easeInOut (t, b, c, d) {
+		if (t < d/2) {
+			return this.easeIn (t*2, 0, c, d) * .5 + b;
+		}
+		else {
+			return this.easeOut (t*2-d, 0, c, d) * .5 + c*.5 + b;
+		} 
 	}
 }

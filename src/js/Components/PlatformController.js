@@ -58,7 +58,7 @@ export default class PlatformController extends RaycastController {
 								  -1, 
 								  rayLength);		
 
-				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + -1 * rayLength*200 }, "green");
+				this.debugDraw && Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + -1 * rayLength*200 }, "green");
 		
 				if (hit) {
 					let targetTransform = hit.targetObject.getComponent("Transform");
@@ -143,7 +143,7 @@ export default class PlatformController extends RaycastController {
 								  directionY, 
 								  rayLength);
 
-				Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*10 }, "green");
+				this.debugDraw && Graphics.line(rayOrigin, {x: rayOrigin.x, y: rayOrigin.y + directionY * rayLength*10 }, "green");
 
 				if (hit) {
 					let targetTransform = hit.targetObject.getComponent("Transform");

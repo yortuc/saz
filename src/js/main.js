@@ -20,6 +20,7 @@ import PlayerController from './Components/PlayerController';
 import PlatformController from './Components/PlatformController';
 
 import Popup from './Components/Popup';
+import DashRenderer from './Components/DashRenderer';
 
 
 Graphics.init(800,600);
@@ -28,7 +29,7 @@ Input.init();
 var oyun = new Scene();
 	new Transform(oyun, {x:0, y: 0, width: 800, height: 600 });
 	var mainSceneQuadTree = new SceneQuadTree(oyun);
-	new SceneQuadTreeNodeRenderer(oyun);
+	//new SceneQuadTreeNodeRenderer(oyun);
 	new FpsRenderer(oyun, {x: 20, y: 100});
 
 	var player = new GameObject({layer: "front"});
@@ -53,14 +54,14 @@ var oyun = new Scene();
 			new RectangleRenderer(kafa, "blue");
 	  
 	var yer3 = new GameObject();
-		new Transform(yer3, {x: 700, y: 325, width: 50, height: 550 });
-		new RectangleRenderer(yer3);
+		new Transform(yer3, {x: 500, y: 300, width: 150, height: 250 });
+		new RectangleRenderer(yer3, "red");
 		new Popup(yer3);
 
 	var yer2 = new GameObject({layer: "platforms"});
 		new Transform(yer2, {x: 160, y: 530, width: 100, height: 20, scatic: true });
-		new RectangleRenderer(yer2);
-		new PlatformController(yer2, {collisionLayer: "front"});
+		new DashRenderer(yer2, {color: "blue"});
+		new PlatformController(yer2);
 
 	var kutu2 = new GameObject();
 		new Transform(kutu2, {x: 50, y: 360, width: 100, height: 100, scatic: true });
@@ -73,7 +74,7 @@ var oyun = new Scene();
 		new Popup(kutu);
 
 	var yer = new GameObject();
-		new Transform(yer, {x: 400, y: 590, width: 800, height: 20, scatic: true });
+		new Transform(yer, {x: 400, y: 585, width: 800, height: 20, scatic: true });
 		new RectangleRenderer(yer, "orange");
 
 MessageHub.init([
