@@ -10,10 +10,8 @@ export default class RectangleRenderer extends Behavior {
 		this.color = color;
 
 		this.theta = Math.PI / 4;
-		this.dy = 30;
-		this.yCount = Math.floor( this.transform.height / this.dy );
+		this.dy = 36;
 		this.tanTheta = Math.tan(this.theta);
-
 		this.offsetY = 0;
 	}
 
@@ -25,6 +23,7 @@ export default class RectangleRenderer extends Behavior {
 		//ctx.rotate(this.transform.rotation*Math.PI/180);
 	
 		ctx.strokeStyle = this.color;
+		ctx.lineWidth = 1;
 		ctx.strokeRect(
 			this.transform.bounds.topLeft.x,
 			this.transform.bounds.topLeft.y, 
@@ -36,7 +35,9 @@ export default class RectangleRenderer extends Behavior {
 		var y0 = this.transform.y - this.transform.height/2 - this.offsetY;
 		var x1, y1, y2, x2, ddx, ddy;
 
-		for(var i=1; i<=this.yCount*2; i++){
+		ctx.lineWidth = 1;
+
+		for(var i=1; i <= 200; i++){
 			x1 = x0;
 			y1 = y0 + i * this.dy;
 			x2 = x0 + ( this.tanTheta * i * this.dy);

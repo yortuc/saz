@@ -21,6 +21,7 @@ import PlatformController from './Components/PlatformController';
 
 import Popup from './Components/Popup';
 import DashRenderer from './Components/DashRenderer';
+import FractalRenderer from './Components/FractalRenderer';
 
 
 Graphics.init(800,600);
@@ -54,7 +55,7 @@ var oyun = new Scene();
 			new RectangleRenderer(kafa, "blue");
 	  
 	var yer3 = new GameObject();
-		new Transform(yer3, {x: 500, y: 300, width: 150, height: 250 });
+		new Transform(yer3, {x: 600, y: 300, width: 150, height: 250 });
 		new RectangleRenderer(yer3, "red");
 		new Popup(yer3);
 
@@ -76,6 +77,10 @@ var oyun = new Scene();
 	var yer = new GameObject();
 		new Transform(yer, {x: 400, y: 585, width: 800, height: 20, scatic: true });
 		new RectangleRenderer(yer, "orange");
+
+	var ucgen = new GameObject();
+		new Transform(ucgen, {x: 350, y: 250, width: 300, height: 300 });
+		new FractalRenderer(ucgen, {color: "orange", limit:3 });
 
 MessageHub.init([
 	/*channels*/ 
@@ -106,6 +111,6 @@ function createBody(){ 
 }
 
 // setInterval(createBody, 1000);
-oyun.setChildren([ yer2, yer3, kutu, kutu2, yer, player ]);
+oyun.setChildren([ yer2, yer3, kutu, kutu2, yer, player, ucgen ]);
 
 oyun.start();

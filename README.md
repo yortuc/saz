@@ -12,7 +12,6 @@ Component based minimalistic 2D javascript game engine.
 * ✓ moving platforms
 * touch joystick component
 * level editor
-
-* simple tweening and easing functionalities
+* simple tween & effects
 * vector class
 * layering in render functions
