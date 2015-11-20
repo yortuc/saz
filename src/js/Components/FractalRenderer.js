@@ -4,11 +4,13 @@ import Behavior from '../Core/Behavior';
 export default class FractalRenderer extends Behavior {
 	constructor(gameObject, data){
 		super(gameObject);
-
-		this.transform = this.gameObject.getComponent("Transform");
 		this.color = data.color || "black";
 		this.limit = data.limit || 3;
+		this.rotation = 0;
+	}
 
+	updatePosition(){
+		this.transform = this.gameObject.getComponent("Transform");
 		this.p0 = { x: this.transform.bounds.bottomLeft.x,
 					y: this.transform.bounds.bottomLeft.y };
 
@@ -17,8 +19,6 @@ export default class FractalRenderer extends Behavior {
 
 		this.p2 = { x: this.transform.bounds.bottomRight.x,
 					y: this.transform.bounds.bottomRight.y };
-
-		
 	}
 
 	sierpinski (p0,p1,p2,limit){
@@ -43,7 +43,6 @@ export default class FractalRenderer extends Behavior {
 		else{
 			this.drawTriangle(p0,p1,p2);
 		}
-
 	}
 
 	drawTriangle(p0,p1,p2){
@@ -54,13 +53,13 @@ export default class FractalRenderer extends Behavior {
 					p1.y );
 		ctx.lineTo( p2.x,
 					p2.y );
-		ctx.fill();
+		ctx.fill(); 
 	}
 
 	update(dt) {
-		var transform = this.gameObject.getComponent("Transform");
-		
-		let ctx = Graphics.ctx;
+		this.updatePosition();
+	
+		let ctx = Graphics.ctx; 
 
 		ctx.save();
 		ctx.fillStyle = this.color;

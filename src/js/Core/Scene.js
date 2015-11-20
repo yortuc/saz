@@ -15,6 +15,7 @@ export default class Scene extends GameObject {
 
 	start() {
 		this.transform = this.getComponent("Transform");
+		this.camera = this.getComponent("Camera");
 		this.lastRender = Date.now();
 		this.update();
 	}
@@ -26,6 +27,9 @@ export default class Scene extends GameObject {
 
 		// clear scene
 		Graphics.clearScene();
+		Graphics.ctx.save();
+		Graphics.ctx.translate(-this.camera.transform.x, 
+							   -this.camera.transform.y);
 
 		// update self components
 		this.components.map(s=> {
@@ -40,6 +44,8 @@ export default class Scene extends GameObject {
 				g.update(dt);
 			}
 		});
+		
+		Graphics.ctx.restore();
 
 		this.lastRender = time;
 
