@@ -25,7 +25,7 @@ export default class PlayerController extends Behavior {
 	update(dt){
 		// jump
 		if (Input.getKeyDown("space") && ( this.controller2D.collisions.below || this.controller2D.collisions.right) ) {
-			MessageHub.emit("player_jump", "event: player jumped");
+			// MessageHub.emit("player_jump", "event: player jumped");
 			this.transform.velocity.y = this.jumpVelocity;
 		}
 
