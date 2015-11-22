@@ -26,6 +26,8 @@ import PlatformController from './Components/PlatformController';
 import Popup from './Components/Popup';
 import DashRenderer from './Components/DashRenderer';
 import FractalRenderer from './Components/FractalRenderer';
+import Shooter from './Components/Shooter';
+
 
 Graphics.init(800, 600);
 Input.init(); 
@@ -54,7 +56,8 @@ var oyun = new Scene();
 		new RectangleShadowRenderer(player, "red"); 
 		new PositionTextRenderer(player, {x: 20, y:20, label:"player pos" });
 		new CameraFollow(player, {camera: mainCamera});
-		 
+		new Shooter(player);
+
 		var kafa = new GameObject();
 			player.addChild(kafa);
 			new Transform(kafa, {x: 0, y: -20, width: 10, height: 10 });

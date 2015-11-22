@@ -4,6 +4,8 @@ import Behavior from '../Core/Behavior';
 export default class FractalRenderer extends Behavior {
 	constructor(gameObject, data){
 		super(gameObject);
+
+		this.static = data.static;
 		this.color = data.color || "black";
 		this.limit = data.limit || 3;
 		this.rotation = 0;
@@ -11,14 +13,14 @@ export default class FractalRenderer extends Behavior {
 
 	updatePosition(){
 		this.transform = this.gameObject.getComponent("Transform");
-		this.p0 = { x: this.transform.bounds.bottomLeft.x,
-					y: this.transform.bounds.bottomLeft.y };
+		this.p0 = { x: this.transform.bounds.bottomLeft.x + this.transform.width/2,
+					y: this.transform.bounds.bottomLeft.y + this.transform.height/2 };
 
-		this.p1 = { x: this.transform.bounds.topLeft.x + this.transform.width/2, 
+		this.p1 = { x: this.transform.bounds.topLeft.x + this.transform.width, 
 					y: this.transform.bounds.topLeft.y };
 
-		this.p2 = { x: this.transform.bounds.bottomRight.x,
-					y: this.transform.bounds.bottomRight.y };
+		this.p2 = { x: this.transform.bounds.bottomRight.x + this.transform.width/2,
+					y: this.transform.bounds.bottomRight.y + this.transform.height/2 };
 	}
 
 	sierpinski (p0,p1,p2,limit){

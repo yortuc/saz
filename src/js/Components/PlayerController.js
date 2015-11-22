@@ -13,6 +13,7 @@ export default class PlayerController extends Behavior {
 		
 		this.controller2D = this.gameObject.getComponent("Controller2D");
 		this.transform = this.gameObject.getComponent("Transform");
+		this.shooter = this.gameObject.getComponent("Shooter");
 
 		this.moveSpeed = data.moveSpeed || 6;
 		this.jumpHeight = data.jumpHeight || 2;
@@ -20,6 +21,8 @@ export default class PlayerController extends Behavior {
 
 		this.gravity = (2 * this.jumpHeight) / Math.pow (this.timeToJumpApex, 2);
 		this.jumpVelocity = -1 * Math.abs(this.gravity) * this.timeToJumpApex;
+
+		this.direction = 1;
 	}
 
 	update(dt){
@@ -31,5 +34,10 @@ export default class PlayerController extends Behavior {
 
 		// horizontal movement
 		this.transform.velocity.x = Input.getAxis("horizontal").x * this.moveSpeed;
+
+		// update player direction
+		if(this.transform.velocity.x !== 0){
+			this.direction = this.transform.velocity.x > 0 ? 1 : -1;
+		}
 	}
 }

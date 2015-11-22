@@ -34,5 +34,8 @@ export default {
 		if(key === "space") {
 			return this.keys[32] > 0;
 		}
+		if(key === "s"){
+			return this.keys[83] > 0;
+		}
 	}
 }
