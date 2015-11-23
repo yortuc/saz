@@ -6,14 +6,10 @@ export default class CameraFollow extends Behavior {
 
 		this.targetTransform = this.gameObject.getComponent("Transform");
 		this.camera = data.camera;
-
-		this.dx = this.targetTransform.x - this.camera.transform.x;
-		this.dy = this.targetTransform.y - this.camera.transform.y;
 	}
 
 	update(dt) {
 		this.camera.transform.x = (this.targetTransform.x - this.camera.transform.width/2);
-		
-		this.camera.transform.y = this.targetTransform.y - this.dy;
+		this.camera.transform.y = this.targetTransform.y - this.camera.transform.height + 200;
 	}
 }

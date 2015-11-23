@@ -1,4 +1,3 @@
-// RectangleRenderer 
 import Graphics from '../utils/graphics';
 import Behavior from '../Core/Behavior';
 

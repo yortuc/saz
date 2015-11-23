@@ -8,22 +8,25 @@ export default class Shooter extends Behavior {
 	constructor(gameObject, data){
 		super(gameObject);
 
-		this.transform = this.gameObject.getComponent("Transform");
 		this.playerController = this.gameObject.getComponent("PlayerController");
 		this.bullets = [];
 		this.lastFire = null;
+
+		this.fireTime = 200; // ms
 	}
 
 	shoot() {
+		let transform = this.gameObject.getComponent("Transform");
 		let direction = this.playerController.direction;
 
 		let bullet = { 
-			x: this.transform.x + direction * 10,
-			y: this.transform.y - 10,
+			x: transform.x + direction * 10,
+			y: transform.y - 10,
 			vx: 20 * direction
 		}
 
 		this.bullets.push( bullet );
+		this.lastFire = Date.now();
 	}
 
 	renderBullets() {
@@ -45,7 +48,7 @@ export default class Shooter extends Behavior {
 
 	update(dt){
 		// shoot
-		if(Input.getKeyDown("s")){
+		if(Input.getKeyDown("s") && Date.now() - this.lastFire > this.fireTime){
 			this.shoot();
 		}
 

@@ -41,7 +41,7 @@ var oyun = new Scene();
 	new FractalRenderer(oyun, {color: "#eee", limit: 3 });
 
 	var player = new GameObject({layer: "front"});
-		new Transform(player, { x: 150, y: 500, width: 30, height: 30 });
+		new Transform(player, { x: 150, y: 380, width: 30, height: 30 });
 		new Controller2D(player, { 
 			jumpHeight: 5,
 			timeToJumpApex: 0.5,
