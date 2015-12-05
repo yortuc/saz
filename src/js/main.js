@@ -28,32 +28,40 @@ import DashRenderer from './Components/DashRenderer';
 import FractalRenderer from './Components/FractalRenderer';
 import Shooter from './Components/Shooter';
 
+import SpriteSheetRenderer from './Components/SpriteSheetRenderer'
+import CrossRenderer from './Components/CrossRenderer'
 
-Graphics.init(800, 600);
-Input.init(); 
+import PlayerWalkAtlas from './assets/PlayerWalkAtlas'
+import Level1 from './assets/Level1'
 
+
+import Resources from './utils/resources';
+
+Graphics.init(1200, 800);
+Input.init();  
+
+
+function createGame() { 
+   
 var oyun = new Scene();
 	new Transform(oyun, { x: 500, y: 0, width: 1800, height: 1000 });
 	var mainCamera = new Camera(oyun, {x:0, y: 100, width: 800, height: 600});
-	//var mainSceneQuadTree = new SceneQuadTree(oyun);
-	//new SceneQuadTreeNodeRenderer(oyun);
-	//new FpsRenderer(oyun, {x: 20, y: -100});
-	new FractalRenderer(oyun, {color: "#eee", limit: 3 });
 
 	var player = new GameObject({layer: "front"});
 		new Transform(player, { x: 150, y: 380, width: 30, height: 30 });
+		new SpriteSheetRenderer(player, { fps: 12, spriteSheet: Resources.images["p1_walk.png"], atlas: PlayerWalkAtlas, playing: true  });
+		//var mainSceneQuadTree = new SceneQuadTree(oyun);
 		new Controller2D(player, { 
 			jumpHeight: 5,
 			timeToJumpApex: 0.5,
 			wallFriction: 0.9,
 			//sceneQuadTree: mainSceneQuadTree
 		});
-		new PlayerController(player, {
+		new PlayerController(player, { 
 			moveSpeed: 6,
 			jumpHeight: 5,
 			timeToJumpApex: 0.5
 		});
-		new RectangleShadowRenderer(player, "red"); 
 		new PositionTextRenderer(player, {x: 20, y:20, label:"player pos" });
 		new CameraFollow(player, {camera: mainCamera});
 		new Shooter(player);
@@ -63,9 +71,24 @@ var oyun = new Scene();
 			new Transform(kafa, {x: 0, y: -20, width: 10, height: 10 });
 			new RectangleRenderer(kafa, "blue");
 
-let gameObjects = Import.parseLevel();
-gameObjects.push(player);
 
-oyun.setChildren(gameObjects);
+	var crossRenderer = new CrossRenderer(player);
 
-oyun.start();
+	let gameObjects = Import.parseLevel(Level1);
+	gameObjects.push(player);
+	oyun.setChildren(gameObjects);
+
+	return oyun;
+}
+
+
+// cross object property binding
+//var FpsLabelCameraFollow = new PropertyMapper()
+
+Resources.loadImages(Level1.dependencies, 
+function(){
+	
+	createGame().start();
+
+});
+

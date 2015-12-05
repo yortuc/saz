@@ -75,7 +75,7 @@ export default class Controller2D extends RaycastController {
 			};
 
 			let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
-												   this.gameObject.getSiblings();
+												   this.gameObject.getCollidibleSiblings();
 
 			let hit = Geometry.RaycastY(
 							  objectsToCollide,
@@ -108,7 +108,7 @@ export default class Controller2D extends RaycastController {
 			};
 
 			let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
-												   this.gameObject.getSiblings();
+												   this.gameObject.getCollidibleSiblings();
 
 			let hit = Geometry.RaycastX(
 							  objectsToCollide,

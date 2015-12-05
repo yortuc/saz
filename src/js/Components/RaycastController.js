@@ -9,7 +9,7 @@ export default class RaycastController extends Behavior {
 
 		// props
 		this.skinWidth = data.skinWidth || 0.015;
-		this.horizontalRayCount = data.horizontalRayCount || 4;
+		this.horizontalRayCount = data.horizontalRayCount || 8;
 		this.horizontalRaySpacing = null;
 		this.verticalRaySpacing = null;
 		this.verticalRayCount = data.verticalRayCount || 8;

@@ -8,6 +8,7 @@ export default {
 	},
 
 	keys: {},
+	mouse: null,
 
 	init: function(){
 
@@ -19,6 +20,19 @@ export default {
 			this.keys[e.keyCode] = 0;
 		}.bind(this);
 
+		var canvas = document.getElementById('canvas');
+
+		canvas.onmousedown = function(e){
+			this.mouse = e;
+		}.bind(this);
+
+		canva.mousemove = function(){
+			
+		}
+
+		canvas.onmouseup = function(e){
+			this.mouse = null;
+		}.bind(this);
 	},
 
 	getAxis: function(axis){
@@ -37,5 +51,9 @@ export default {
 		if(key === "s"){
 			return this.keys[83] > 0;
 		}
+	},
+
+	getMouseDown: function(){
+		return this.mouse
 	}
 }

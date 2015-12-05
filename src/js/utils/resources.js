@@ -14,13 +14,36 @@ export default {
         }
 
         for (var src in sources) {
-            this.images[src] = new Image();
-            this.images[src].onload = function(){
+            var key = sources[src].image;
+            this.images[key] = new Image();
+            this.images[key].onload = function(){
                 if (++loadedImages >= numImages) {
                     callback(this.images);
                 }
-            }
-            this.images[src].src = sources[src];
+            }.bind(this);
+            
+            var imagePath = sources[src].image;
+
+            this.images[key].src = "images/" + imagePath;
+        }
+    } ,
+
+    loadImagesFromArray: function(sourcesArr, callback) {
+
+        var loadedImages = 0;
+        var numImages = sourcesArr.length;
+
+        for (var i=0; i<sourcesArr.length; i++) {
+            let source = sourcesArr[i];
+
+            this.images[source] = new Image();
+            this.images[source].onload = function(){
+                if (++loadedImages >= numImages) {
+                    callback(this.images);
+                }
+            }.bind(this);
+
+            this.images[source].src = "images/" + source;
         }
     } 
 };

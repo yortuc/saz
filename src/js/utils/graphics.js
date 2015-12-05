@@ -5,7 +5,8 @@ export default {
 		this.width = width;
 		this.height = height;
 
-		this.ctx = document.getElementById("canvas").getContext("2d");
+		this.canvas = document.getElementById("canvas");
+		this.ctx = canvas.getContext("2d");
 	},
 
 	clearScene: function(){

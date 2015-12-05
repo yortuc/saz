@@ -11,7 +11,8 @@ Component based minimalistic 2D javascript game engine.
 * ✓ use quadTree in collision tests
 * ✓ moving platforms
 * ✓ camera
-* ✓ tile map importing
+* ✓ tile map importing, layers, entity mapping
+* sprite renderer
 * shooting
 * simple sound
 * enemies

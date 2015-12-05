@@ -15,6 +15,7 @@ export default class Transform extends Behavior {
 		this.width = data.width;
 		this.height = data.height;
 		this.anchor = data.anchor || {x: 0.5, y: 0.5};
+		this.collides = data.collides;
 
 		this.parent = this.gameObject.parent ? this.gameObject.parent.getComponent("Transform") : null;
 	}

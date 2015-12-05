@@ -25,11 +25,15 @@ export default class Scene extends GameObject {
 		const time = Date.now();
 		const dt =  time - this.lastRender;
 
+		let ctx = Graphics.ctx;
+
 		// clear scene
-		Graphics.clearScene();
-		Graphics.ctx.save();
-		Graphics.ctx.translate(-this.camera.transform.x, 
-							   -this.camera.transform.y);
+		//ctx.clearScene();
+		ctx.fillStyle = "#444";
+        ctx.fillRect(0,0,this.transform.width,this.transform.height);	
+		ctx.save();
+		ctx.translate(-this.camera.transform.x, 
+		              -this.camera.transform.y);
 
 		// update self components
 		this.components.map(s=> {

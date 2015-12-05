@@ -10,6 +10,14 @@ export default class CameraFollow extends Behavior {
 
 	update(dt) {
 		this.camera.transform.x = (this.targetTransform.x - this.camera.transform.width/2);
-		this.camera.transform.y = this.targetTransform.y - this.camera.transform.height + 200;
+
+
+		if(this.targetTransform.y - this.camera.transform.y < 200) {
+			this.camera.transform.y = this.targetTransform.y + 200;
+		}
+		else{
+			this.camera.transform.y = this.targetTransform.y + 200 - this.camera.transform.height;
+		}
+
 	}
 }

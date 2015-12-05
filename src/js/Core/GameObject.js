@@ -41,6 +41,18 @@ export default class GameObject {
 		return siblings;
 	}
 
+	getCollidibleSiblings(){
+		let parent = this.parent;
+		if(!parent) return null;
+
+		let siblings = parent.children.filter(s=> {
+			let sTransform = s.getComponent("Transform");
+			return s !== this && sTransform.collides;
+		}.bind(this));
+
+		return siblings;
+	}
+
 	update (dt) { 
 		this.components.map(c => c.update && c.update(dt));
 		this.children.map(c => c.update && c.update(dt));
