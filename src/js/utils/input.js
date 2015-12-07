@@ -26,8 +26,8 @@ export default {
 			this.mouse = e;
 		}.bind(this);
 
-		canva.mousemove = function(){
-			
+		canvas.mousemove = function(){
+
 		}
 
 		canvas.onmouseup = function(e){
@@ -37,8 +37,8 @@ export default {
 
 	getAxis: function(axis){
 		if(axis === "horizontal"){
-			if(this.keys[37] > 0) return {x:-1, y: 0};
-			if(this.keys[39] > 0) return {x: 1, y: 0};
+			if(this.keys[37] > 0 || this.keys[65]) return {x:-1, y: 0};
+			if(this.keys[39] > 0 || this.keys[68]) return {x: 1, y: 0};
 
 			return {x:0 , y:0 }
 		}
@@ -46,7 +46,7 @@ export default {
 
 	getKeyDown: function(key){
 		if(key === "space") {
-			return this.keys[32] > 0;
+			return this.keys[32] > 0 || this.keys[87] > 0;
 		}
 		if(key === "s"){
 			return this.keys[83] > 0;

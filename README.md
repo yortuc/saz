@@ -14,6 +14,8 @@ Component based minimalistic 2D javascript game engine.
 * ✓ tile map importing, layers, entity mapping
 * sprite renderer
 * shooting
+* cross renderer, mouse events, keyboard events
+
 * simple sound
 * enemies
 * variable jump height

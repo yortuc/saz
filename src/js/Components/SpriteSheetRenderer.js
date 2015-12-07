@@ -37,6 +37,11 @@ export default class SpriteSheetRenderer extends Behavior {
 		console.log("frames extracted", this.frames.length)
 	}
 
+	stop() {
+		this.playing = false;
+		this.currentFrameIndex = 0;
+	}
+
 	update(dt) {
 		
 		if(this.playing && this.elapsedTime >= 1000.0 / this.fps){

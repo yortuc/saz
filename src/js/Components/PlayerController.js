@@ -14,6 +14,7 @@ export default class PlayerController extends Behavior {
 		this.controller2D = this.gameObject.getComponent("Controller2D");
 		this.transform = this.gameObject.getComponent("Transform");
 		this.shooter = this.gameObject.getComponent("Shooter");
+		//this.sprite = this.gameObject.getComponent("SpriteSheetRenderer");
 
 		this.moveSpeed = data.moveSpeed || 6;
 		this.jumpHeight = data.jumpHeight || 2;

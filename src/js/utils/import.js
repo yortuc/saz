@@ -23,7 +23,7 @@ export default {
 
 				if(col !== "" && col !== "0"){
 					var imageKey = level.getTileImage(col);
-					var collides = col !== "0"; // level.isTileCollidible(col);
+					var collides = level.isTileCollidible(col);
 
 					gameObjects.push( this.createTile( col, imageKey, collides, i, j ) );
 				}

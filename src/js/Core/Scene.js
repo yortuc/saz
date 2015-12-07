@@ -2,6 +2,7 @@ import GameObject from './GameObject';
 import requestAnimationFrame from '../requestAnimationFrame';  
 import Graphics from '../utils/graphics';
 import Geometry from '../utils/Geometry';
+import Resources from '../utils/resources';
 
 export default class Scene extends GameObject {
 
@@ -28,9 +29,11 @@ export default class Scene extends GameObject {
 		let ctx = Graphics.ctx;
 
 		// clear scene
-		//ctx.clearScene();
-		ctx.fillStyle = "#444";
-        ctx.fillRect(0,0,this.transform.width,this.transform.height);	
+		//Graphics.clearScene();
+		//ctx.fillStyle = "#444";
+        //ctx.fillRect(0,0,this.transform.width,this.transform.height);
+        ctx.drawImage(Resources.images["bg2.jpg"], 0,0, 1200, 800);
+
 		ctx.save();
 		ctx.translate(-this.camera.transform.x, 
 		              -this.camera.transform.y);

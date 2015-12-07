@@ -12,35 +12,74 @@ export default class Shooter extends Behavior {
 		this.bullets = [];
 		this.lastFire = null;
 
+		this.bulletSpeed = 20;
+
 		this.fireTime = 200; // ms
 	}
 
-	shoot() {
+	shoot(targetPoint) {
 		let transform = this.gameObject.getComponent("Transform");
-		let direction = this.playerController.direction;
+		//let direction = this.playerController.direction;
 
-		let bullet = { 
-			x: transform.x + direction * 10,
-			y: transform.y - 10,
-			vx: 20 * direction
+		let targetVector = {
+			x: targetPoint.x - transform.x,
+			y: targetPoint.y - transform.y
 		}
+
+		let magnitudeTargetVector = Math.sqrt(targetVector.x*targetVector.x + targetVector.y*targetVector.y);
+		
+		let normalizeTargetVector = {
+			x: targetVector.x / magnitudeTargetVector,
+			y: targetVector.y / magnitudeTargetVector
+		}
+
+		var bulletR = 4; // + (7 * Math.random());
+		let bullet = { 
+			x: transform.x + normalizeTargetVector.x * 10 ,
+			y: transform.y - normalizeTargetVector.y * 10,
+			vx: normalizeTargetVector.x * this.bulletSpeed,
+			vy: normalizeTargetVector.y * this.bulletSpeed,
+			target: targetVector,
+			r: bulletR,
+			color: this.color( 255 , 0,0)
+		}
+
+		//250 + (bulletR-3)*-250/7
+
+		console.log(bullet.color);
 
 		this.bullets.push( bullet );
 		this.lastFire = Date.now();
+	}
+
+	color(r,g,b){
+		return "rgb(" + parseInt(r).toString() + "," + g.toString() + "," + b.toString() + ")";
 	}
 
 	renderBullets() {
 		let ctx = Graphics.ctx;
 
 		ctx.save();
-		ctx.fillStyle = "red";
+		
 
-		this.bullets.map(b=>{
+		this.bullets.map((b, index)=>{
 			b.x += b.vx;
+			b.y += b.vy;
 
-			ctx.beginPath();
-	      	ctx.arc(b.x, b.y, 5, 0, 2 * Math.PI, false);
-	      	ctx.fill();
+			if( Math.abs(b.target.x - b.x) < 20 &&
+				Math.abs(b.target.y - b.y) < 20 ) {
+
+				// at target 
+				bullets.splice(index, 1);
+			}
+			else{
+				ctx.fillStyle = b.color;
+				ctx.beginPath();
+	      		ctx.arc(b.x, b.y, b.r, 0, 2 * Math.PI, false);
+	      		ctx.fill();
+			}
+
+			
 	    });
 
 	    ctx.restore();
@@ -48,9 +87,9 @@ export default class Shooter extends Behavior {
 
 	update(dt){
 		// shoot
-		if(Input.getKeyDown("s") && Date.now() - this.lastFire > this.fireTime){
-			this.shoot();
-		}
+		//if(Input.getKeyDown("s") && Date.now() - this.lastFire > this.fireTime){
+	//		this.shoot();
+	//	}
 
 		let ctx = Graphics.ctx;
 		
