@@ -9,12 +9,13 @@ class QuadTreeNode {
 		this.subNodes = [];			// leaf nodes of branch node
 		this.objects = [];			// containing elements of leaf node
 		this.level = level;			// level of node
-		this.maxObjects = 3;
+		this.maxObjects = 50;
 		this.maxLevels = 5;
 	}
 
 	clear() {
 		if(this.subNodes.length === 0){
+			//this.objects.map(o => o.getComponent("Transform").debug = false );
 			this.objects = [];
 		} else {
 			this.subNodes.map(s=> {
@@ -83,7 +84,7 @@ class QuadTreeNode {
 		let topQuadrant = transform.y <= horizontalMidpoint;
 
 		// Object can completely fit within the bottom quadrants
-		let bottomQuadrant = !topQuadrant; //transform.y > horizontalMidpoint;
+		let bottomQuadrant = transform.y >= horizontalMidpoint;
 	 
 		// Object can completely fit within the left quadrants
 		if (transform.x <= verticalMidpoint) {
@@ -95,7 +96,7 @@ class QuadTreeNode {
 			}
 		}
 		// Object can completely fit within the right quadrants
-		else if (transform.x > verticalMidpoint) {
+		else if (transform.x >= verticalMidpoint) {
 			if (topQuadrant) {
 				index = 1;
 			}
@@ -117,7 +118,11 @@ class QuadTreeNode {
 			this.subNodes[index].retrieve(returnObjects, refObject);
 		}
 
-		this.objects.map(o=> returnObjects.push(o));
+		this.objects.map(o=> {
+			o.getComponent("Transform").debug = true;
+			returnObjects.push(o);
+		});
+
 		return returnObjects;
 	}
 

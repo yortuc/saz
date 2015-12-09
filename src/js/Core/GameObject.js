@@ -21,6 +21,15 @@ export default class GameObject {
 		return child;
 	}
 
+	removeChild(child){
+		this.children.map((c,index)=>{
+			if (c===child) {
+				this.children.splice(index, 1);
+				return;
+			}
+		});
+	}
+
 	getComponent (typeInfo){
 		for(var i=0; i<this.components.length; i++){
 			let c = this.components[i];
@@ -51,6 +60,10 @@ export default class GameObject {
 		}.bind(this));
 
 		return siblings;
+	}
+
+	kill(){
+		this.parent.removeChild(this);
 	}
 
 	update (dt) { 

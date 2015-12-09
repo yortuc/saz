@@ -8,6 +8,8 @@ export default class Controller2D extends RaycastController {
 	constructor(gameObject, data){
 		super(gameObject, data);
 
+		data = data || {};
+
 		// props
 		this.moveSpeed = data.moveSpeed || 6;
 		this.jumpHeight = data.jumpHeight || 2;
@@ -76,6 +78,9 @@ export default class Controller2D extends RaycastController {
 
 			let objectsToCollide = this.quadTree ? this.quadTree.filterObjects( this.gameObject ) : 
 												   this.gameObject.getCollidibleSiblings();
+
+			console.log("collidible count", objectsToCollide.length);
+
 
 			let hit = Geometry.RaycastY(
 							  objectsToCollide,

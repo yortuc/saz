@@ -1,7 +1,12 @@
 // RectangleRenderer 
 import Graphics from '../utils/graphics';
 import Behavior from '../Core/Behavior';
+import GameObject from '../Core/GameObject';
+import Transform from '../Components/Transform';
+import RectangleRenderer from '../Components/RectangleRenderer';
 import Input from '../utils/input';
+import BulletController from '../Components/BulletController';
+import Controller2D from '../Components/Controller2D';
 
 export default class Shooter extends Behavior {
 	
@@ -14,10 +19,10 @@ export default class Shooter extends Behavior {
 
 		this.bulletSpeed = 20;
 
-		this.fireTime = 200; // ms
+		this.fireTime = 1200; // ms
 	}
 
-	shoot(targetPoint) {
+	shoot(weapon, targetPoint) {
 		let transform = this.gameObject.getComponent("Transform");
 		//let direction = this.playerController.direction;
 
@@ -35,8 +40,8 @@ export default class Shooter extends Behavior {
 
 		var bulletR = 4; // + (7 * Math.random());
 		let bullet = { 
-			x: transform.x + normalizeTargetVector.x * 10 ,
-			y: transform.y - normalizeTargetVector.y * 10,
+			x: transform.x + normalizeTargetVector.x * 30 ,
+			y: transform.y - normalizeTargetVector.y * 30,
 			vx: normalizeTargetVector.x * this.bulletSpeed,
 			vy: normalizeTargetVector.y * this.bulletSpeed,
 			target: targetVector,
@@ -44,11 +49,27 @@ export default class Shooter extends Behavior {
 			color: this.color( 255 , 0,0)
 		}
 
+		// construct the bullet according to weapon
+		var objBullet = new GameObject();
+			new Transform(objBullet, {
+				x: bullet.x, 
+				y: bullet.y, 
+				width: 10, 
+				height: 10, 
+				velocity: {x: bullet.vx, y: bullet.vy}, 
+				collides: true }
+			);
+			new RectangleRenderer(objBullet, "blue");
+			new BulletController(objBullet);	// killer
+			new Controller2D(objBullet, {jumpHeight: 0.000000000001});
+
+		this.gameObject.parent.addChild(objBullet);
+
 		//250 + (bulletR-3)*-250/7
 
 		console.log(bullet.color);
 
-		this.bullets.push( bullet );
+		//this.bullets.push( bullet );
 		this.lastFire = Date.now();
 	}
 
@@ -91,9 +112,9 @@ export default class Shooter extends Behavior {
 	//		this.shoot();
 	//	}
 
-		let ctx = Graphics.ctx;
+		//let ctx = Graphics.ctx;
 		
-		this.renderBullets();
+		//this.renderBullets();
 	}
 
 }

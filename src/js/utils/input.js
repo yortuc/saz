@@ -9,6 +9,7 @@ export default {
 
 	keys: {},
 	mouse: null,
+	isDown: false,
 
 	init: function(){
 
@@ -23,14 +24,18 @@ export default {
 		var canvas = document.getElementById('canvas');
 
 		canvas.onmousedown = function(e){
+			this.isDown = true;
 			this.mouse = e;
 		}.bind(this);
 
-		canvas.mousemove = function(){
-
-		}
+		canvas.onmousemove = function(e){
+			if(this.isDown){
+				this.mouse = e;	
+			}
+		}.bind(this);
 
 		canvas.onmouseup = function(e){
+			this.isDown = false;
 			this.mouse = null;
 		}.bind(this);
 	},

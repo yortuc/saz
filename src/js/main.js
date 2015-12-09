@@ -50,12 +50,13 @@ var oyun = new Scene();
 	var player = new GameObject({layer: "front"});
 		new Transform(player, { x: 150, y: 380, width: 30, height: 30 });
 		new SpriteSheetRenderer(player, { fps: 12, spriteSheet: Resources.images["p1_walk.png"], atlas: PlayerWalkAtlas, playing: true  });
-		//var mainSceneQuadTree = new SceneQuadTree(oyun);
+		var mainSceneQuadTree = new SceneQuadTree(oyun);
+		new SceneQuadTreeNodeRenderer(oyun);
 		new Controller2D(player, { 
 			jumpHeight: 5,
 			timeToJumpApex: 0.5,
 			wallFriction: 0.9,
-			//sceneQuadTree: mainSceneQuadTree
+			sceneQuadTree: mainSceneQuadTree
 		});
 		new PlayerController(player, { 
 			moveSpeed: 6,

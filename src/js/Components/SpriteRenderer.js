@@ -22,6 +22,11 @@ export default class SpriteRenderer extends Behavior {
 
 		ctx.drawImage(this.spriteSheet,0,0,this.size,this.size);
 
+		if(this.transform.debug){
+			ctx.fillStyle= "green";
+			ctx.fillRect(0,0,this.size,this.size);
+		}
+
 		ctx.restore();
 	}
 

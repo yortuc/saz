@@ -20,6 +20,8 @@ export default class CrossRenderer extends Behavior {
 		var mouseDown = Input.getMouseDown();
 		if( mouseDown ){
 
+			console.log("im mouse. and im down.");
+
 			this.camera = this.gameObject.parent.getComponent("Camera");
 			this.transform = this.gameObject.getComponent("Transform");
 
@@ -55,7 +57,7 @@ export default class CrossRenderer extends Behavior {
 				//ctx.lineWidth = 1;
 				//ctx.stroke();
 
-				this.shooter.shoot({x: x1, y:y1});
+				this.shooter.shoot(1, {x: x1, y:y1});
 	      	}
 
 	      	ctx.restore();
